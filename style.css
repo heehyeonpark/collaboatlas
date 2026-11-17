@@ -178,14 +178,16 @@ html[data-theme=dark] .side-inline-stage.selected img{filter:brightness(0)}
 .m07-ring-secondary{fill:none;stroke:var(--ink);stroke-width:1.8}
 .m07-ring-core{fill:none;stroke:var(--ink);stroke-width:3.2}
 .m07-ring-spoke{fill:none;stroke:var(--ink);stroke-width:1.6}
-.m07-circular-model .m07-field-arc{stroke-width:4.5}
+.m07-circular-model .m07-field-arc{stroke-width:6.5}
+.m07-hub-fill{fill:var(--ink)}
 .m07-circular-model .m07-classification-link{stroke:var(--muted);stroke-width:1.3;opacity:.75}
 .m07-circle-heading{font-size:14px;font-weight:800;letter-spacing:.5px;fill:var(--ink)}
 .m07-perspective{font-size:24px;font-weight:800;letter-spacing:-.6px;fill:var(--ink)}
 .m07-perspective-long{font-size:19px;letter-spacing:-.5px}
 .m07-perspective-ko{font-size:13px;fill:var(--muted)}
 .m07-axis-ring-label{font-size:12px;font-weight:700;letter-spacing:1px;fill:var(--ink)}
-.m07-design-problem{font-size:35px;font-weight:800;letter-spacing:-1.2px;fill:var(--ink)}
+.m07-design-problem{font-size:35px;font-weight:800;letter-spacing:-1.2px;fill:var(--paper)}
+.m07-design-problem-ko{font-size:13px;fill:var(--paper);opacity:.75}
 .m07-kidp-label{font-size:14px;font-weight:700;letter-spacing:-.25px;fill:var(--ink)}
 .m07-kidp-axes{font-size:11px;font-weight:600;fill:var(--muted)}
 .m07-circle-caption{font-size:10px;fill:var(--muted);letter-spacing:.15px}
@@ -310,7 +312,7 @@ button,.button,.nav-section a,#field-switch button,.role-tabs button,.tab-strip 
 .m07-route-box{transition:stroke .2s ease,stroke-width .2s ease}
 .m07-route-action:hover .m07-route-box,.m07-route-action:focus-visible .m07-route-box{stroke:var(--accent);stroke-width:1.8}
 .m07-field-arc{transition:stroke-width .2s ease}
-[data-map-field]:hover .m07-field-arc,[data-map-field]:focus-visible .m07-field-arc{stroke-width:5}
+[data-map-field]:hover .m07-field-arc,[data-map-field]:focus-visible .m07-field-arc{stroke-width:8}
 .m07-classification-link{transition:opacity .25s ease,stroke-width .25s ease}
 .m07-classification-link:hover{opacity:1;stroke-width:1.6}
 .m07-kidp-field:hover .m07-classification-dot,[data-map-field]:hover .m07-classification-dot{fill:var(--accent)}
@@ -318,8 +320,8 @@ button,.button,.nav-section a,#field-switch button,.role-tabs button,.tab-strip 
 
 /* The rings themselves stay still now — the motion is the two label rings actually naming what each layer is: Buchanan's four orders just outside the quadrants, KIDP's classification just outside its own zone. Text, not decoration, is what moves. */
 .m07-orbit-dot{display:none}
-.m07-band-ring{fill:none;stroke:var(--ink);stroke-width:19}
-.m07-band-text{fill:var(--paper);font-size:11px;font-weight:700;letter-spacing:.4px}
+.m07-band-ring{fill:none;stroke:var(--ink);stroke-width:12}
+.m07-band-text{fill:var(--paper);font-size:11px;font-weight:700;letter-spacing:1px}
 .m07-band-buchanan{animation:m07-spin 24s linear infinite}
 .m07-band-kidp{animation:m07-spin 34s linear infinite reverse}
 @keyframes m07-spin{to{transform:rotate(360deg)}}
