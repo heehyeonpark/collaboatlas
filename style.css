@@ -316,10 +316,12 @@ button,.button,.nav-section a,#field-switch button,.role-tabs button,.tab-strip 
 .m07-kidp-field:hover .m07-classification-dot,[data-map-field]:hover .m07-classification-dot{fill:var(--accent)}
 .m07-classification-dot{transition:fill .2s ease}
 
-/* The circular model is the one graphic open on every visit, so it carries the only ambient motion in the app. The rings themselves stay solid (no dashing) — a small accent dot orbits the outer ring instead, and the four field arcs breathe gently. */
-.m07-orbit-dot{fill:var(--accent);animation:m07-orbit 8s linear infinite}
+/* Previous version, brought back temporarily so the two can be compared side by side with motion actually visible: dashed/flowing outer rings instead of the orbiting dot. */
+.m07-orbit-dot{display:none}
+.m07-ring-outline{stroke-dasharray:6 10;animation:m07-flow 9s linear infinite}
+.m07-ring-secondary{stroke-dasharray:4 8;animation:m07-flow 6s linear infinite reverse}
 .m07-field-arc{animation:m07-breathe 2.4s ease-in-out infinite}
-@keyframes m07-orbit{to{transform:rotate(360deg)}}
+@keyframes m07-flow{to{stroke-dashoffset:-320}}
 @keyframes m07-breathe{0%,100%{stroke-width:3.2}50%{stroke-width:6.5}}
 
 /* A panel that just opened (role pair, guide proposal) settles in instead of popping. */
