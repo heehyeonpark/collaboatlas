@@ -316,12 +316,12 @@ button,.button,.nav-section a,#field-switch button,.role-tabs button,.tab-strip 
 .m07-kidp-field:hover .m07-classification-dot,[data-map-field]:hover .m07-classification-dot{fill:var(--accent)}
 .m07-classification-dot{transition:fill .2s ease}
 
-/* The circular model is the one graphic open on every visit, so it carries the only ambient motion in the app: the outer two rings read as a slow, breathing pulse around the fixed Buchanan/Axis core. */
-.m07-ring-outline{stroke-dasharray:3 7;animation:m07-flow 46s linear infinite}
-.m07-ring-secondary{stroke-dasharray:2 6;animation:m07-flow 34s linear infinite reverse}
-.m07-field-arc{animation:m07-breathe 7s ease-in-out infinite}
-@keyframes m07-flow{to{stroke-dashoffset:-400}}
-@keyframes m07-breathe{0%,100%{stroke-width:3.2}50%{stroke-width:4.4}}
+/* The circular model is the one graphic open on every visit, so it carries the only ambient motion in the app: the outer two rings read as a slow, breathing pulse around the fixed Buchanan/Axis core. (v2: turned up well past subtle so it reads at a glance; dial back once confirmed visible.) */
+.m07-ring-outline{stroke-dasharray:6 10;animation:m07-flow 9s linear infinite}
+.m07-ring-secondary{stroke-dasharray:4 8;animation:m07-flow 6s linear infinite reverse}
+.m07-field-arc{animation:m07-breathe 2.4s ease-in-out infinite}
+@keyframes m07-flow{to{stroke-dashoffset:-320}}
+@keyframes m07-breathe{0%,100%{stroke-width:3.2}50%{stroke-width:6.5}}
 
 /* A panel that just opened (role pair, guide proposal) settles in instead of popping. */
 .compact-actor-pair,.metaphor,.map07-guide-proposal,.inline-panel-heading{animation:m07-settle .4s ease-out both}
