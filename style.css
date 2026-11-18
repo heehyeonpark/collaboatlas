@@ -338,4 +338,5 @@ html[data-theme=dark] img.custom-logo{filter:none}
 .m07-circular-model .m07-axis-outer-arc{stroke-width:14}
 .m07-axis-outer-label{font-size:20px;font-weight:800;letter-spacing:-.3px;fill:var(--ink)}
 .m07-axis-outer-ko{font-size:12px;fill:var(--muted)}
+.m07-axis-outer-ko-inline{font-size:12px;font-weight:600;fill:var(--muted)}
 [data-map-field]:hover .m07-axis-outer-arc,[data-map-field]:focus-visible .m07-axis-outer-arc{stroke-width:17}
