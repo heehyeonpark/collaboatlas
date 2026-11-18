@@ -325,7 +325,7 @@ button,.button,.nav-section a,#field-switch button,.role-tabs button,.tab-strip 
 .m07-orbit-dot{display:none}
 .m07-band-ring{fill:none;stroke:var(--ink);stroke-width:24}
 .m07-band-text{fill:var(--paper);font-size:14px;font-weight:700;letter-spacing:1px}
-.m07-band-text-ko{font-size:14px;font-weight:700;letter-spacing:0}
+.m07-band-text-ko{font-size:14px;font-weight:400;letter-spacing:0}
 .m07-band-buchanan{animation:m07-spin 24s linear infinite}
 .m07-band-kidp{animation:m07-spin 34s linear infinite reverse}
 @keyframes m07-spin{to{transform:rotate(360deg)}}
