@@ -158,7 +158,7 @@ html[data-theme=dark] .side-inline-stage.selected img{filter:brightness(0)}
 .m07-route-caption{font-size:9px;fill:var(--muted)}
 .m07-read-order{stroke:var(--line);stroke-width:1;fill:none}
 .m07-arrow-head{stroke:var(--muted);stroke-width:1;fill:none}
-.m07-mini-cell{stroke:var(--line);stroke-width:.6;fill:none}
+.m07-mini-cell{stroke:var(--muted);stroke-width:1;fill:none}
 .m07-mini-actual,.m07-actual{fill:#276778;stroke:var(--paper);stroke-width:.6}
 .m07-mini-ideal,.m07-ideal{fill:#b44e32;stroke:var(--paper);stroke-width:.6}
 .m07-connection{fill:none;stroke:var(--muted);stroke-width:1.2}
@@ -190,6 +190,7 @@ html[data-theme=dark] .side-inline-stage.selected img{filter:brightness(0)}
 .m07-design-problem-ko{font-size:13px;fill:var(--paper);opacity:.75}
 .m07-kidp-label{font-size:14px;font-weight:700;letter-spacing:-.25px;fill:var(--ink)}
 .m07-kidp-axes{font-size:11px;font-weight:600;fill:var(--muted)}
+.m07-kidp-axes-inline{font-size:11px;font-weight:600;fill:var(--muted)}
 .m07-circle-caption{font-size:10px;fill:var(--muted);letter-spacing:.15px}
 .m07-model-title{font-size:24px;font-weight:800;letter-spacing:-.7px;fill:var(--ink)}
 .m07-model-description{font-size:13px;fill:var(--ink)}
