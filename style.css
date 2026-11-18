@@ -186,7 +186,7 @@ html[data-theme=dark] .side-inline-stage.selected img{filter:brightness(0)}
 .m07-perspective-long{font-size:19px;letter-spacing:-.5px}
 .m07-perspective-ko{font-size:13px;fill:var(--muted)}
 .m07-axis-ring-label{font-size:12px;font-weight:700;letter-spacing:1px;fill:var(--ink)}
-.m07-design-problem{font-size:35px;font-weight:800;letter-spacing:-1.2px;fill:var(--paper)}
+.m07-design-problem{font-size:26px;font-weight:800;letter-spacing:-1px;fill:var(--paper)}
 .m07-design-problem-ko{font-size:13px;fill:var(--paper);opacity:.75}
 .m07-kidp-label{font-size:14px;font-weight:700;letter-spacing:-.25px;fill:var(--ink)}
 .m07-kidp-axes{font-size:11px;font-weight:600;fill:var(--muted)}
@@ -320,8 +320,8 @@ button,.button,.nav-section a,#field-switch button,.role-tabs button,.tab-strip 
 
 /* The rings themselves stay still now — the motion is the two label rings actually naming what each layer is: Buchanan's four orders just outside the quadrants, KIDP's classification just outside its own zone. Text, not decoration, is what moves. */
 .m07-orbit-dot{display:none}
-.m07-band-ring{fill:none;stroke:var(--ink);stroke-width:16}
-.m07-band-text{fill:var(--paper);font-size:11px;font-weight:700;letter-spacing:1px}
+.m07-band-ring{fill:none;stroke:var(--ink);stroke-width:24}
+.m07-band-text{fill:var(--paper);font-size:14px;font-weight:700;letter-spacing:1px}
 .m07-band-buchanan{animation:m07-spin 24s linear infinite}
 .m07-band-kidp{animation:m07-spin 34s linear infinite reverse}
 @keyframes m07-spin{to{transform:rotate(360deg)}}
