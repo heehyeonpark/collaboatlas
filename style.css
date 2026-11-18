@@ -340,6 +340,7 @@ html[data-theme=dark] img.custom-logo{filter:none}
 
 /* Circular model layer order, corrected: Design Problem -> Buchanan's four orders -> KIDP's nine fields -> Axis A-D as the outermost, encompassing layer (the thesis's own framework), color-coded and linked out to the four field panels. */
 .m07-circular-model .m07-axis-outer-arc{stroke-width:14}
+.m07-field-shimmer{fill:none;stroke-width:24;stroke-linecap:round;mix-blend-mode:soft-light}
 .m07-axis-outer-label{font-size:20px;font-weight:800;letter-spacing:-.3px;fill:var(--ink)}
 .m07-axis-outer-ko{font-size:12px;fill:var(--muted)}
 .m07-axis-outer-ko-inline{font-size:12px;font-weight:600;fill:var(--muted)}
