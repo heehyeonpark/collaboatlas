@@ -54,18 +54,18 @@ body[data-app-section=home] main{padding:30px 40px 38px}
 body[data-app-section=home] .home-title{flex-wrap:wrap;gap:20px}
 body[data-app-section=home] .home-title h1{font-size:clamp(44px,4.8vw,74px)}
 .home-function-tabs{display:flex;flex-direction:column;gap:12px;margin-top:5px}
-.home-function-tabs>a{display:flex;align-items:center;justify-content:space-between;gap:24px;border:1px solid var(--ink);padding:26px 28px;text-decoration:none;transition:background .12s,color .12s}
+.home-function-tabs>a{display:block;position:relative;border:1px solid var(--ink);padding:24px 20px;text-decoration:none;transition:background .12s,color .12s}
 .home-function-tabs>a:hover,.home-function-tabs>a:focus-visible{background:var(--ink)}
 .home-function-tabs>a:hover *,.home-function-tabs>a:focus-visible *{color:var(--paper)}
-.home-function-tabs>a>div{min-width:0}
+.home-function-tabs>a>div{min-width:0;padding-right:24px}
 .home-function-tabs>a>div>span{display:block;font-size:10px;letter-spacing:1.4px;color:var(--accent)}
 .home-function-tabs>a>div>b{display:block;font-size:30px;font-weight:800;letter-spacing:-1px;line-height:1.1;margin-top:12px}
 .home-function-tabs>a>div>small{display:block;font-size:12px;margin-top:10px}
 .home-function-tabs>a>div>p{font-size:10px;color:var(--muted);line-height:1.9;margin:15px 0 0}
-.home-function-tabs>a>em{font-style:normal;font-size:26px;flex-shrink:0;transition:transform .12s}
+.home-function-tabs>a>em{position:absolute;top:24px;right:20px;font-style:normal;font-size:20px;transition:transform .12s}
 .home-function-tabs>a:hover>em,.home-function-tabs>a:focus-visible>em{transform:translateX(5px)}
-@media(max-width:1000px){body[data-app-section=home] .app-shell{grid-template-columns:180px minmax(0,1fr)}body[data-app-section=home] main{padding:25px}.home-function-tabs>a{padding-left:8px;padding-right:8px}.home-function-tabs>a:before{left:-12px}}
-@media(max-width:700px){body[data-app-section=home] .app-shell{display:block}body[data-app-section=home] .app-shell>aside{display:block;padding:15px 20px}body[data-app-section=home] main{padding:23px 20px 30px}body[data-app-section=home] .home-title h1{font-size:44px}.home-function-tabs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:0}.home-function-tabs>a{padding:16px 14px;gap:10px}.home-function-tabs>a>div>span{font-size:8px}.home-function-tabs>a>div>b{font-size:23px;letter-spacing:-.6px;margin-top:6px}.home-function-tabs>a>div>small{font-size:10px;margin-top:6px}.home-function-tabs>a>div>p{display:none}.home-function-tabs>a>em{font-size:20px}}
+@media(max-width:1000px){body[data-app-section=home] .app-shell{grid-template-columns:180px minmax(0,1fr)}body[data-app-section=home] main{padding:25px}.home-function-tabs>a{padding:20px 14px}.home-function-tabs>a>div{padding-right:18px}.home-function-tabs>a>em{right:14px}}
+@media(max-width:700px){body[data-app-section=home] .app-shell{display:block}body[data-app-section=home] .app-shell>aside{display:block;padding:15px 20px}body[data-app-section=home] main{padding:23px 20px 30px}body[data-app-section=home] .home-title h1{font-size:44px}.home-function-tabs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:0}.home-function-tabs>a{padding:16px 14px}.home-function-tabs>a>div{padding-right:20px}.home-function-tabs>a>div>span{font-size:8px}.home-function-tabs>a>div>b{font-size:23px;letter-spacing:-.6px;margin-top:6px}.home-function-tabs>a>div>small{font-size:10px;margin-top:6px}.home-function-tabs>a>div>p{display:none}.home-function-tabs>a>em{top:16px;right:14px;font-size:18px}}
 /* Inline stage guide: preserve domain selection and open one explanation beneath it. */
 .guide-stage-choices>button{position:relative;background:none;border:0;border-right:1px solid var(--line);padding:20px 15px;text-align:left;color:var(--ink)}
 .guide-stage-choices>button:last-child{border-right:0}
