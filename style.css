@@ -149,9 +149,9 @@ html[data-theme=dark] .side-inline-stage.selected img{filter:brightness(0)}
 .m07-field-rule{fill:none;stroke:var(--field);stroke-width:2.6}
 .m07-stage-name{font-size:12px;font-weight:700;letter-spacing:.1px;fill:var(--ink)}
 .m07-overline{font-size:11px;font-weight:700;letter-spacing:.6px;fill:var(--ink)}
-.m07-route-box{fill:none;stroke:var(--line);stroke-width:1}
+.m07-route-box{fill:none;stroke:var(--ink);stroke-width:1.5}
 .m07-route-action{cursor:pointer}
-.m07-route-action:hover .m07-route-box,.m07-route-action:focus .m07-route-box{stroke:var(--field);stroke-width:2;fill:var(--soft)}
+.m07-route-action:hover .m07-route-box,.m07-route-action:focus .m07-route-box{stroke:var(--field);stroke-width:2.2;fill:var(--soft)}
 .m07-status{font-size:9px;fill:var(--muted)}
 .m07-pair-ai{font-size:16px;font-weight:700;letter-spacing:-.2px;fill:var(--ink)}
 .m07-pair-human{font-size:13px;fill:var(--ink)}
@@ -162,8 +162,8 @@ html[data-theme=dark] .side-inline-stage.selected img{filter:brightness(0)}
 .m07-mini-actual,.m07-actual{fill:#276778;stroke:var(--paper);stroke-width:.6}
 .m07-mini-ideal,.m07-ideal{fill:#b44e32;stroke:var(--paper);stroke-width:.6}
 .m07-connection{fill:none;stroke:var(--muted);stroke-width:1.2}
-.m07-texture{fill:none;stroke:var(--line);stroke-width:.5;opacity:.6}
-.m07-texture-dot{fill:var(--line);opacity:.75}
+.m07-texture{fill:none;stroke:var(--muted);stroke-width:.8;opacity:.85}
+.m07-texture-dot{fill:var(--muted);opacity:.85}
 .m07-field-arc{fill:none;stroke:var(--field);stroke-width:3.2}
 .m07-quadrant-title{font-size:18px;font-weight:800;letter-spacing:-.6px;fill:var(--ink)}
 .m07-quadrant-code{font-size:10px;font-weight:600;letter-spacing:1px;fill:var(--muted)}
@@ -310,7 +310,7 @@ html[data-theme=dark] .logo-dark{display:block}
 button,.button,.nav-section a,#field-switch button,.role-tabs button,.tab-strip button,.record-stage-tabs button,input,select,textarea{transition:background-color .2s ease,border-color .2s ease,box-shadow .2s ease,color .2s ease}
 .map-action,.map-point,.m07-route-action{transition:opacity .25s ease}
 .m07-route-box{transition:stroke .2s ease,stroke-width .2s ease}
-.m07-route-action:hover .m07-route-box,.m07-route-action:focus-visible .m07-route-box{stroke:var(--accent);stroke-width:1.8}
+.m07-route-action:hover .m07-route-box,.m07-route-action:focus-visible .m07-route-box{stroke:var(--accent);stroke-width:2.2}
 .m07-field-arc{transition:stroke-width .2s ease}
 [data-map-field]:hover .m07-field-arc,[data-map-field]:focus-visible .m07-field-arc{stroke-width:8}
 .m07-classification-link{transition:opacity .25s ease,stroke-width .25s ease}
@@ -320,7 +320,7 @@ button,.button,.nav-section a,#field-switch button,.role-tabs button,.tab-strip 
 
 /* The rings themselves stay still now — the motion is the two label rings actually naming what each layer is: Buchanan's four orders just outside the quadrants, KIDP's classification just outside its own zone. Text, not decoration, is what moves. */
 .m07-orbit-dot{display:none}
-.m07-band-ring{fill:none;stroke:var(--ink);stroke-width:12}
+.m07-band-ring{fill:none;stroke:var(--ink);stroke-width:16}
 .m07-band-text{fill:var(--paper);font-size:11px;font-weight:700;letter-spacing:1px}
 .m07-band-buchanan{animation:m07-spin 24s linear infinite}
 .m07-band-kidp{animation:m07-spin 34s linear infinite reverse}
