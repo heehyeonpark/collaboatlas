@@ -344,3 +344,5 @@ html[data-theme=dark] img.custom-logo{filter:none}
 .m07-axis-outer-ko{font-size:12px;fill:var(--muted)}
 .m07-axis-outer-ko-inline{font-size:12px;font-weight:600;fill:var(--muted)}
 [data-map-field]:hover .m07-axis-outer-arc,[data-map-field]:focus-visible .m07-axis-outer-arc{stroke-width:17}
+
+.side-field-controls b,.side-field-controls small{word-break:keep-all;overflow-wrap:normal}
