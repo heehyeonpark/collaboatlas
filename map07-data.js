@@ -7,9 +7,9 @@ C:[{ai:['Co'],human:['V'],status:'수렴 후보',focus:'경험의 방향 설정'
 D:[{ai:['As'],human:['I','V','O'],status:'검토 후보',focus:'문제·목적 해석',note:'관계와 목적을 읽는 여러 판단 역할을 검토합니다.'},{ai:['As'],human:['O'],status:'수렴 후보',focus:'협업 흐름 조율',note:'설문 상위 조합과 다르지만 이상 As–O가 3/3명입니다.'},{ai:['Ad'],human:['V'],status:'수렴 후보',focus:'가치·영향 검토',note:'설문 상위 조합과 다르지만 이상 Ad–V가 2/3명입니다.'},{ai:['Co'],human:['V'],status:'수렴 후보',focus:'공동 구체화',note:'설문 Co·V와 이상 Co–V 2/3명이 겹칩니다. 실무 조건은 추가 대조가 필요합니다.'}]};
 const MAP07_FOCI={A:['문제와 메시지','표현 가능성','의미의 적합성','전달의 일관성'],B:['용도와 제약','형태 대안','기능과 실현성','구현과 명세'],C:['사용 맥락','행동 시나리오','상호작용 검토','경험의 구체화'],D:['관계와 목적','구조 대안','맥락과 영향','운영과 전달']};
 const MAP07_DOMAINS=[{name:'시각 / 정보',axes:['A']},{name:'디지털미디어',axes:['A','C']},{name:'제품',axes:['B']},{name:'패션 / 텍스타일',axes:['B']},{name:'산업공예',axes:['B']},{name:'공간 / 환경',axes:['D','C']},{name:'서비스 / 경험',axes:['C','D']},{name:'융합',axes:['D']},{name:'디자인 일반',axes:['D']}];
-Object.assign(FIELDS.A,{en:'Sign & Meaning',ko:'기호와 의미',focus:'의미 전달과 해석의 관점에서 디자인 문제를 살펴봅니다.',boundary:'기호 중심 관점입니다. 분야명만으로 프로젝트의 모든 활동을 고정하지 않습니다.'});
-Object.assign(FIELDS.B,{en:'Things & Form',ko:'사물과 형태',focus:'형태와 기능, 물리적 구성의 관점에서 문제를 살펴봅니다.',boundary:'사물 중심 관점입니다. 진행 중 의미나 상호작용으로 초점이 이동할 수 있습니다.'});
-Object.assign(FIELDS.C,{en:'Action & Experience',ko:'행동과 경험',includes:'행동·경험·UI/UX·인터랙션·디지털미디어',focus:'행동과 상호작용의 흐름을 중심으로 문제를 살펴봅니다.',boundary:'행동과 경험 중심 관점입니다. 동일한 매체도 현재 과업에 따라 다른 관점과 연결됩니다.'});
-Object.assign(FIELDS.D,{en:'System & Environment',ko:'체계와 환경',includes:'체계·환경·서비스·융합·전략',focus:'관계와 운영, 복합적인 맥락에서 디자인 문제를 살펴봅니다.',boundary:'체계와 환경 중심 관점입니다. 개별 결과물과 전체 체계의 관계를 함께 검토합니다.'});
+Object.assign(FIELDS.A,{en:'Symbols & Meaning',ko:'기호·의미 중심',focus:'의미 전달과 해석의 관점에서 디자인 문제를 살펴봅니다.',boundary:'기호 중심 관점입니다. 분야명만으로 프로젝트의 모든 활동을 고정하지 않습니다.'});
+Object.assign(FIELDS.B,{en:'Things & Artifacts',ko:'사물·인공물 중심',focus:'형태와 기능, 물리적 구성의 관점에서 문제를 살펴봅니다.',boundary:'사물 중심 관점입니다. 진행 중 의미나 상호작용으로 초점이 이동할 수 있습니다.'});
+Object.assign(FIELDS.C,{en:'Actions & Interaction',ko:'행동·인터랙션 중심',includes:'UI/UX·인터랙션·디지털미디어(인터랙티브)',focus:'행동과 상호작용의 흐름을 중심으로 문제를 살펴봅니다.',boundary:'행동·인터랙션 중심 관점입니다. 동일한 매체도 현재 과업에 따라 다른 관점과 연결됩니다.'});
+Object.assign(FIELDS.D,{en:'Systems & Services',ko:'시스템·서비스 중심',includes:'서비스·경험·융합·전략·공간환경',focus:'관계와 운영, 복합적인 맥락에서 디자인 문제를 살펴봅니다.',boundary:'시스템·서비스 중심 관점입니다. 개별 결과물과 전체 체계의 관계를 함께 검토합니다.'});
 function map07Proposal(a,s){return MAP07_PROPOSALS[a][s]}
 function map07PairLabel(a,s){let p=map07Proposal(a,s);return p.ai.join(' / ')+' — '+p.human.join(' / ')}
