@@ -36,20 +36,24 @@ const AX={A:[180,270],B:[270,360],C:[90,180],D:[0,90]};
 Object.entries(AX).forEach(([a,[s,e]])=>{svg+=`<g data-map-field="${a}" tabindex="0" role="button" class="map-action m07c-axis" aria-label="AXIS ${a} / ${FIELDS[a].ko}"><title>AXIS ${a} · ${FIELDS[a].ko}</title><path d="${ring(R.axis0,R.axis1,s+0.8,e-0.8)}" style="fill:${FIELDS[a].color}" class="m07c-axis-arc"/>${arcText((R.axis0+R.axis1)/2,(s+e)/2,70,`AXIS ${a}<tspan dx="10">·</tspan><tspan dx="10">${esc(FIELDS[a].ko)}</tspan>`,'m07c-axis-label')}</g>`});
 
 /* KIDP 이름 띠 */
-const band=(r,w,label,ko,cls,centers)=>{let txt=`${esc(label)}<tspan dx="8" class="m07c-band-ko">·</tspan><tspan dx="8" class="m07c-band-ko">${esc(ko)}</tspan>`;return `<g class="m07c-band ${cls}"><circle cx="${cx}" cy="${cy}" r="${r}" class="m07c-band-ring" style="stroke-width:${w}"/>${centers.map(c=>arcText(r,c,170,txt,'m07c-band-text',4.2)).join('')}</g>`};
-svg+=band((R.mix2+R.bandK)/2,R.bandK-R.mix2,'NINE DESIGN CATEGORIES','KIDP(2019) 9개 분야','m07c-band-kidp',[315,135]);
+const band=(r,w,label,ko,cls,dir)=>{let unit=`${esc(label)}  ·  <tspan class="m07c-band-ko">${esc(ko)}</tspan>  ·  `,txt=unit.repeat(7),top=`m07c-${seq}-${n++}`,bot=`m07c-${seq}-${n++}`;return `<g class="m07c-band ${cls}"><circle cx="${cx}" cy="${cy}" r="${r}" class="m07c-band-ring" style="stroke-width:${w}"/><path id="${top}" d="M${cx-r} ${cy}A${r} ${r} 0 0 1 ${cx+r} ${cy}" fill="none"/><path id="${bot}" d="M${cx-r} ${cy}A${r} ${r} 0 0 0 ${cx+r} ${cy}" fill="none"/><text class="m07c-band-text" dy="4.2"><textPath href="#${top}" class="m07c-ticker" data-reps="7" data-dir="${dir}">${txt}</textPath></text><text class="m07c-band-text" dy="4.2"><textPath href="#${bot}" class="m07c-ticker" data-reps="7" data-dir="${-dir}">${txt}</textPath></text></g>`};
+svg+=band((R.mix2+R.bandK)/2,R.bandK-R.mix2,'NINE DESIGN CATEGORIES','KIDP(2019) 9개 분야','m07c-band-kidp',-1);
 
 /* 모든 축에 걸친 분야: 융합, 디자인일반. 한 바퀴를 다 두르고 D 구간을 진하게 */
 const span=MAP07_DOMAINS.filter(d=>d.label&&d.label.includes('모든 축'));
-[[R.kidp,R.mix1],[R.mix1,R.mix2]].forEach(([r0,r1],i)=>{let d=span[i];if(!d)return;let rm=(r0+r1)/2;svg+=`<g class="m07-kidp-field m07c-kidp m07c-all" data-kidp-label="${esc(d.name)}"><title>KIDP ${d.name} · ${d.label}</title><circle cx="${cx}" cy="${cy}" r="${rm}" class="m07c-all-ring" style="stroke-width:${r1-r0}"/><path d="${ring(r0,r1,0,90)}" class="m07c-all-core"/><circle cx="${cx}" cy="${cy}" r="${r0}" class="m07c-line"/><circle cx="${cx}" cy="${cy}" r="${r1}" class="m07c-line"/>${arcText(rm,58,40,show(d.name),'m07c-kidp-name',5)}${arcText(rm,24,30,tagOf(d),'m07c-kidp-tag',4)}</g>`});
+const hex=c=>[1,3,5].map(i=>parseInt(c.slice(i,i+2),16)),mix=(a,b,k)=>'rgb('+a.map((v,i)=>Math.round(v+(b[i]-v)*k)).join(',')+')';
+const stops=[[45,'D'],[135,'C'],[225,'A'],[315,'B'],[405,'D']].map(([a,k])=>[a,hex(FIELDS[k].color)]);
+const colorAt=a=>{a=((a-45)%360+360)%360+45;for(let i=0;i<4;i++){let [a0,c0]=stops[i],[a1,c1]=stops[i+1];if(a<=a1){let k=(a-a0)/(a1-a0);k=k*k*(3-2*k);return mix(c0,c1,k)}}return mix(stops[0][1],stops[0][1],0)};
+const flow=(r0,r1)=>{let g='';for(let a=0;a<360;a+=4)g+=`<path d="${ring(r0,r1,a,a+4.4)}" style="fill:${colorAt(a+2)}"/>`;return g};
+[[R.kidp,R.mix1,'m07c-flow-1'],[R.mix1,R.mix2,'m07c-flow-2']].forEach(([r0,r1,flowCls],i)=>{let d=span[i];if(!d)return;let rm=(r0+r1)/2;svg+=`<g class="m07-kidp-field m07c-kidp m07c-all" data-kidp-label="${esc(d.name)}" data-hot="A B C D"><title>KIDP ${d.name} · ${d.label} (네 축 모두에 걸치며 본 연구는 D에 주로 대응)</title><circle cx="${cx}" cy="${cy}" r="${rm}" class="m07c-all-ring" style="stroke-width:${r1-r0}"/><g class="m07c-flow ${flowCls}" style="transform-origin:${cx}px ${cy}px">${flow(r0,r1)}</g><path d="${ring(r0,r1,0,90)}" class="m07c-all-core"/><circle cx="${cx}" cy="${cy}" r="${r0}" class="m07c-line"/><circle cx="${cx}" cy="${cy}" r="${r1}" class="m07c-line"/>${arcText(rm,58,40,show(d.name),'m07c-kidp-name m07c-halo',5)}${arcText(rm,24,30,tagOf(d),'m07c-kidp-tag m07c-all-tag',4)}</g>`});
 
 /* KIDP 7개 분야: 한 고리를 방사선으로 나눔 (그림 2-2와 같은 각도) */
 const seg={'산업공예':[330,360],'패션 / 텍스타일':[300,330],'제품':[270,300],'시각 / 정보':[215,270],'디지털미디어 / 콘텐츠':[130,215],'서비스 / 경험':[50,130],'공간 / 환경':[0,50]};
-MAP07_DOMAINS.filter(d=>seg[d.name]).forEach(d=>{let [s,e]=seg[d.name],c=(s+e)/2,top=c>180&&c<360,sp=e-s-4,a=p(R.bandB,s),b=p(R.kidp,s);svg+=`<g class="m07-kidp-field m07c-kidp" data-kidp-label="${esc(d.name)}"><title>KIDP ${d.name} · ${d.label||d.axes.join(' · ')}</title><path d="${ring(R.bandB,R.kidp,s,e)}" class="m07c-kidp-cell"/><path d="M${a[0]} ${a[1]}L${b[0]} ${b[1]}" class="m07c-line"/>${arcText(top?255:243,c,sp,show(d.name),'m07c-kidp-name')}${arcText(top?232:266,c,sp,tagOf(d),'m07c-kidp-tag',4)}</g>`});
+MAP07_DOMAINS.filter(d=>seg[d.name]).forEach(d=>{let [s,e]=seg[d.name],c=(s+e)/2,top=c>180&&c<360,sp=e-s-4,a=p(R.bandB,s),b=p(R.kidp,s);svg+=`<g class="m07-kidp-field m07c-kidp" data-kidp-label="${esc(d.name)}" data-hot="${d.axes.join(' ')}" style="--c:${FIELDS[d.axes[0]].color}"><title>KIDP ${d.name} · ${d.label||d.axes.join(' · ')}</title><path d="${ring(R.bandB,R.kidp,s,e)}" class="m07c-kidp-cell"/><path d="M${a[0]} ${a[1]}L${b[0]} ${b[1]}" class="m07c-line"/>${arcText(top?255:243,c,sp,show(d.name),'m07c-kidp-name')}${arcText(top?232:266,c,sp,tagOf(d),'m07c-kidp-tag',4)}</g>`});
 svg+=`<circle cx="${cx}" cy="${cy}" r="${R.kidp}" class="m07c-line"/>`;
 
 /* Buchanan 이름 띠 */
-svg+=band((R.quad+R.bandB)/2,R.bandB-R.quad,'FOUR ORDERS OF DESIGN','Buchanan(1992)의 네 영역','m07c-band-buchanan',[225,45]);
+svg+=band((R.quad+R.bandB)/2,R.bandB-R.quad,'FOUR ORDERS OF DESIGN','Buchanan(1992)의 네 영역','m07c-band-buchanan',1);
 
 /* Buchanan 네 영역: 같은 크기(위계 없음) */
 const quadrants=[['A',180,270,'hatch','SYMBOL','기호'],['B',270,360,'dot','THINGS','사물'],['C',90,180,'grid','ACTIONS','활동과 서비스'],['D',0,90,'cross','ENVIRONMENTS','시스템과 환경']];
@@ -59,5 +63,9 @@ svg+=`<path d="M${cx-R.quad} ${cy}H${cx-R.core} M${cx+R.core} ${cy}H${cx+R.quad}
 /* 가운데 */
 svg+=`<circle cx="${cx}" cy="${cy}" r="${R.core}" class="m07-hub-fill"/><text x="${cx}" y="${cy-10}" text-anchor="middle" class="m07c-problem">DESIGN</text><text x="${cx}" y="${cy+14}" text-anchor="middle" class="m07c-problem">PROBLEM</text><text x="${cx}" y="${cy+36}" text-anchor="middle" class="m07c-problem-ko">디자인 문제</text>`;
 
+Object.entries(AX).forEach(([a,[s,e]])=>{let b0=p(R.core,s),b1=p(R.axis1+26,s),c0=p(R.core,e),c1=p(R.axis1+26,e);svg+=`<g class="m07c-wedge m07c-wedge-${a}" style="--c:${FIELDS[a].color}"><path d="${ring(R.core,R.axis0,s,e)}" class="m07c-wedge-fill"/><path d="M${b0[0]} ${b0[1]}L${b1[0]} ${b1[1]}M${c0[0]} ${c0[1]}L${c1[0]} ${c1[1]}" class="m07c-wedge-edge"/></g>`});
 svg+=`<text x="${cx}" y="${cy+418}" text-anchor="middle" class="m07-circle-caption">안쪽부터 Buchanan의 네 영역 · KIDP 9개 분야 · 4대 상위 축. 네 영역은 같은 크기로 두어 위계를 뜻하지 않습니다.</text><text x="${cx}" y="${cy+434}" text-anchor="middle" class="m07-circle-caption">분야 아래 표기는 그 분야가 걸치는 축이며 앞의 것이 주로 대응시킨 축입니다. 대응과 걸침은 본 연구의 해석입니다(그림 2-2).</text></g>`;
 return svg}
+(function(){if(typeof window==='undefined'||window.__m07Ticker)return;window.__m07Ticker=true;const still=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;const speed=22;let t0=performance.now();
+function tick(now){let el=document.querySelectorAll('textPath.m07c-ticker');el.forEach(tp=>{let u=+tp.dataset.unit;if(!u){let tx=tp.parentNode;try{u=tx.getComputedTextLength()/(+tp.dataset.reps||7)}catch(e){u=0}if(!u)return;tp.dataset.unit=u}let off=still?0:((now-t0)/1000*speed)%u,dir=+tp.dataset.dir||1;tp.setAttribute('startOffset',dir>0?(off-u):(-off))});if(!still)requestAnimationFrame(tick)}
+requestAnimationFrame(tick);if(still)setInterval(()=>requestAnimationFrame(tick),1500)})();

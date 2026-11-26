@@ -369,3 +369,34 @@ html[data-theme=dark] img.custom-logo{filter:none}
 .m07c-axis-arc{transition:opacity .2s ease}
 .m07c-axis-label{font-size:14px;font-weight:800;letter-spacing:.2px;fill:#fff}
 .m07c-axis:hover .m07c-axis-arc,.m07c-axis:focus-visible .m07c-axis-arc{opacity:.82}
+
+/* 원형 세 층위: 움직임과 롤오버 */
+.m07c-band-text{font-size:11.5px;font-weight:700;letter-spacing:.9px}
+.m07c-band-ko{font-weight:600;letter-spacing:0}
+.m07c-flow{opacity:.42;transition:opacity .3s ease}
+.m07c-flow path{stroke:none}
+.m07c-flow-1{animation:m07-spin 48s linear infinite}
+.m07c-flow-2{animation:m07-spin 64s linear infinite reverse}
+.m07c-all-core{fill:var(--ink);opacity:.14}
+.m07c-all-ring{stroke:var(--paper)}
+.m07c-halo{paint-order:stroke;stroke:var(--paper);stroke-width:4px;stroke-linejoin:round}
+.m07c-all:hover .m07c-flow{opacity:.66}
+.m07c-all:hover .m07c-all-ring{stroke:var(--paper)}
+.m07c-kidp:not(.m07c-all):hover .m07c-kidp-cell{fill:color-mix(in srgb,var(--c) 24%,var(--paper))}
+.m07c-wedge{pointer-events:none}
+.m07c-wedge-fill{fill:var(--c);opacity:0;mix-blend-mode:multiply;transition:opacity .35s ease}
+.m07c-wedge-edge{fill:none;stroke:var(--c);stroke-width:1.4;stroke-dasharray:5 5;opacity:0;transition:opacity .35s ease}
+[data-theme=dark] .m07c-wedge-fill{mix-blend-mode:screen}
+.map07-poster:has([data-map-field="A"]:hover,[data-map-field="A"]:focus-visible) .m07c-wedge-A :is(.m07c-wedge-fill),
+.map07-poster:has([data-map-field="B"]:hover,[data-map-field="B"]:focus-visible) .m07c-wedge-B :is(.m07c-wedge-fill),
+.map07-poster:has([data-map-field="C"]:hover,[data-map-field="C"]:focus-visible) .m07c-wedge-C :is(.m07c-wedge-fill),
+.map07-poster:has([data-map-field="D"]:hover,[data-map-field="D"]:focus-visible) .m07c-wedge-D :is(.m07c-wedge-fill){opacity:.2}
+.map07-poster:has([data-map-field="A"]:hover) .m07c-wedge-A .m07c-wedge-edge,
+.map07-poster:has([data-map-field="B"]:hover) .m07c-wedge-B .m07c-wedge-edge,
+.map07-poster:has([data-map-field="C"]:hover) .m07c-wedge-C .m07c-wedge-edge,
+.map07-poster:has([data-map-field="D"]:hover) .m07c-wedge-D .m07c-wedge-edge{opacity:.9}
+.map07-poster:has([data-hot~="A"]:hover) .m07c-wedge-A .m07c-wedge-fill,
+.map07-poster:has([data-hot~="B"]:hover) .m07c-wedge-B .m07c-wedge-fill,
+.map07-poster:has([data-hot~="C"]:hover) .m07c-wedge-C .m07c-wedge-fill,
+.map07-poster:has([data-hot~="D"]:hover) .m07c-wedge-D .m07c-wedge-fill{opacity:.1}
+.m07c-all-tag{fill:var(--ink);opacity:.8}
