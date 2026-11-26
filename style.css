@@ -373,14 +373,14 @@ html[data-theme=dark] img.custom-logo{filter:none}
 /* 원형 세 층위: 움직임과 롤오버 */
 .m07c-band-text{font-size:15px;font-weight:700;letter-spacing:1.4px}
 .m07c-band-ko{font-weight:600;letter-spacing:0}
-.m07c-flow{opacity:.42;transition:opacity .3s ease}
+.m07c-flow{opacity:.85;transition:opacity .3s ease}
 .m07c-flow path{stroke:none}
 .m07c-flow-1{animation:m07-spin 48s linear infinite}
 .m07c-flow-2{animation:m07-spin 64s linear infinite reverse}
 .m07c-all-core{fill:var(--ink);opacity:.14}
 .m07c-all-ring{stroke:var(--paper)}
 .m07c-halo{paint-order:stroke;stroke:var(--paper);stroke-width:4px;stroke-linejoin:round}
-.m07c-all:hover .m07c-flow{opacity:.66}
+.m07c-all:hover .m07c-flow{opacity:1}
 .m07c-all:hover .m07c-all-ring{stroke:var(--paper)}
 .m07c-kidp:not(.m07c-all):hover .m07c-kidp-cell{fill:color-mix(in srgb,var(--c) 24%,var(--paper))}
 .m07c-wedge{pointer-events:none}
