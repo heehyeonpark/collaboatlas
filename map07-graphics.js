@@ -17,21 +17,47 @@ function map07ClassificationLinks(){const names={A:'SYMBOL',B:'THINGS',C:'ACTION
 MAP07_DOMAINS.forEach((d,j)=>{let y=1026+j*24;d.axes.forEach(a=>{let i='ABCD'.indexOf(a),sy=1040+i*59;out+=`<path d="M770 ${sy}C860 ${sy},925 ${y},1012 ${y}" class="m07-classification-link"><title>${names[a]} / Axis ${a} ↔ ${d.name}</title></path>`});out+=`<circle cx="1012" cy="${y}" r="3" class="m07-classification-dot"/><text x="1025" y="${y+4}" class="m07-media-name">${d.name}<tspan dx="7" class="m07-tiny">${d.axes.join('/')}</tspan></text>`});
 Object.keys(names).forEach((a,i)=>{let y=1040+i*59;out+=`<g data-map-field="${a}" role="button" tabindex="0" class="map-action"><text x="590" y="${y-3}" class="m07-classification-label">${names[a]} / ${a}</text><text x="590" y="${y+14}" class="m07-tiny">${FIELDS[a].ko}</text><circle cx="770" cy="${y}" r="4" class="m07-classification-dot"/></g>`});out+='<text x="590" y="1256" class="m07-tiny">분류 대응의 연결 · 복수 Axis 유지 · 시간 순서가 아님</text><text x="590" y="1291" class="m07-overline">SBRT / STAGE-BASED ROLE TRANSITION</text><text x="590" y="1317" class="m07-small">현재 과업을 판단하고 협업 역할을 설정·수행·재검토합니다.</text><text x="590" y="1340" class="m07-tiny">단계 이동과 역할 전환은 항상 일대일로 일어나지 않습니다.</text>';return out}
 
-function map07CircularModel(cx=870,cy=625){const p=(r,a)=>[cx+r*Math.cos(a*Math.PI/180),cy+r*Math.sin(a*Math.PI/180)];let svg=`<g class="m07-circular-model"><text x="${cx}" y="${cy-416}" text-anchor="middle" class="m07-circle-heading">BUCHANAN 4 · KIDP 9 · AXIS A–D</text><circle cx="${cx}" cy="${cy}" r="373" class="m07-ring-outline"/><circle cx="${cx}" cy="${cy}" r="96" class="m07-ring-core"/><circle cx="${cx}" cy="${cy}" r="92" class="m07-hub-fill"/>`;
+function map07CircularModel(cx=870,cy=625){
+/* 논문 그림 2-2(원형 세 층위)와 같은 구조: 안쪽부터 Buchanan 네 영역, KIDP 9개 분야, 4대 상위 축.
+   반지름은 fig_ch2.py fig23의 pt 값 × 약 1.955. 각도는 화면 기준(시계 방향, 0° = 오른쪽). */
+const R={core:74,quad:188,bandB:207,kidp:289,mix1:315,mix2:340,bandK:360,axis0:368,axis1:395};
+const p=(r,a)=>[cx+r*Math.cos(a*Math.PI/180),cy+r*Math.sin(a*Math.PI/180)];
+const ring=(r0,r1,a0,a1)=>{if(a1-a0>=360)a1=a0+359.99;let big=a1-a0>180?1:0,o0=p(r1,a0),o1=p(r1,a1),i1=p(r0,a1),i0=p(r0,a0);return `M${o0[0]} ${o0[1]}A${r1} ${r1} 0 ${big} 1 ${o1[0]} ${o1[1]}L${i1[0]} ${i1[1]}A${r0} ${r0} 0 ${big} 0 ${i0[0]} ${i0[1]}Z`};
+const seq=(typeof window!=='undefined'?(window.__m07CircSeq=(window.__m07CircSeq||0)+1):Math.floor(Math.random()*1e6));
+let n=0;
+/* 호를 따라 쓰는 글자: 위쪽 반원은 시계 방향, 아래쪽 반원은 반시계 방향으로 깔아 똑바로 읽히게 한다 */
+const arcText=(r,center,span,content,cls,dy=5)=>{let id=`m07c-${seq}-${n++}`,top=center>180&&center<360,a0=center-span/2,a1=center+span/2,s=top?p(r,a0):p(r,a1),e=top?p(r,a1):p(r,a0);return `<path id="${id}" d="M${s[0]} ${s[1]}A${r} ${r} 0 0 ${top?1:0} ${e[0]} ${e[1]}" fill="none"/><text text-anchor="middle" dy="${dy}" class="${cls}"><textPath href="#${id}" startOffset="50%">${content}</textPath></text>`};
+const show=name=>esc(name.replace(/\s/g,''));
+const tagOf=d=>esc(d.label||d.axes.join(' · '));
+let svg=`<g class="m07-circular-model m07c"><text x="${cx}" y="${cy-416}" text-anchor="middle" class="m07-circle-heading">BUCHANAN 4 · KIDP 9 · AXIS A–D</text>`;
+
+/* 4대 상위 축 */
+const AX={A:[180,270],B:[270,360],C:[90,180],D:[0,90]};
+Object.entries(AX).forEach(([a,[s,e]])=>{svg+=`<g data-map-field="${a}" tabindex="0" role="button" class="map-action m07c-axis" aria-label="AXIS ${a} / ${FIELDS[a].ko}"><title>AXIS ${a} · ${FIELDS[a].ko}</title><path d="${ring(R.axis0,R.axis1,s+0.8,e-0.8)}" style="fill:${FIELDS[a].color}" class="m07c-axis-arc"/>${arcText((R.axis0+R.axis1)/2,(s+e)/2,70,`AXIS ${a}<tspan dx="10">·</tspan><tspan dx="10">${esc(FIELDS[a].ko)}</tspan>`,'m07c-axis-label')}</g>`});
+
+/* KIDP 이름 띠 */
+const band=(r,w,label,ko,cls,centers)=>{let txt=`${esc(label)}<tspan dx="8" class="m07c-band-ko">·</tspan><tspan dx="8" class="m07c-band-ko">${esc(ko)}</tspan>`;return `<g class="m07c-band ${cls}"><circle cx="${cx}" cy="${cy}" r="${r}" class="m07c-band-ring" style="stroke-width:${w}"/>${centers.map(c=>arcText(r,c,170,txt,'m07c-band-text',4.2)).join('')}</g>`};
+svg+=band((R.mix2+R.bandK)/2,R.bandK-R.mix2,'NINE DESIGN CATEGORIES','KIDP(2019) 9개 분야','m07c-band-kidp',[315,135]);
+
+/* 모든 축에 걸친 분야: 융합, 디자인일반. 한 바퀴를 다 두르고 D 구간을 진하게 */
+const span=MAP07_DOMAINS.filter(d=>d.label&&d.label.includes('모든 축'));
+[[R.kidp,R.mix1],[R.mix1,R.mix2]].forEach(([r0,r1],i)=>{let d=span[i];if(!d)return;let rm=(r0+r1)/2;svg+=`<g class="m07-kidp-field m07c-kidp m07c-all" data-kidp-label="${esc(d.name)}"><title>KIDP ${d.name} · ${d.label}</title><circle cx="${cx}" cy="${cy}" r="${rm}" class="m07c-all-ring" style="stroke-width:${r1-r0}"/><path d="${ring(r0,r1,0,90)}" class="m07c-all-core"/><circle cx="${cx}" cy="${cy}" r="${r0}" class="m07c-line"/><circle cx="${cx}" cy="${cy}" r="${r1}" class="m07c-line"/>${arcText(rm,58,40,show(d.name),'m07c-kidp-name',5)}${arcText(rm,24,30,tagOf(d),'m07c-kidp-tag',4)}</g>`});
+
+/* KIDP 7개 분야: 한 고리를 방사선으로 나눔 (그림 2-2와 같은 각도) */
+const seg={'산업공예':[330,360],'패션 / 텍스타일':[300,330],'제품':[270,300],'시각 / 정보':[215,270],'디지털미디어 / 콘텐츠':[130,215],'서비스 / 경험':[50,130],'공간 / 환경':[0,50]};
+MAP07_DOMAINS.filter(d=>seg[d.name]).forEach(d=>{let [s,e]=seg[d.name],c=(s+e)/2,top=c>180&&c<360,sp=e-s-4,a=p(R.bandB,s),b=p(R.kidp,s);svg+=`<g class="m07-kidp-field m07c-kidp" data-kidp-label="${esc(d.name)}"><title>KIDP ${d.name} · ${d.label||d.axes.join(' · ')}</title><path d="${ring(R.bandB,R.kidp,s,e)}" class="m07c-kidp-cell"/><path d="M${a[0]} ${a[1]}L${b[0]} ${b[1]}" class="m07c-line"/>${arcText(top?255:243,c,sp,show(d.name),'m07c-kidp-name')}${arcText(top?232:266,c,sp,tagOf(d),'m07c-kidp-tag',4)}</g>`});
+svg+=`<circle cx="${cx}" cy="${cy}" r="${R.kidp}" class="m07c-line"/>`;
+
+/* Buchanan 이름 띠 */
+svg+=band((R.quad+R.bandB)/2,R.bandB-R.quad,'FOUR ORDERS OF DESIGN','Buchanan(1992)의 네 영역','m07c-band-buchanan',[225,45]);
+
+/* Buchanan 네 영역: 같은 크기(위계 없음) */
 const quadrants=[['A',180,270,'hatch','SYMBOL','기호'],['B',270,360,'dot','THINGS','사물'],['C',90,180,'grid','ACTIONS','활동과 서비스'],['D',0,90,'cross','ENVIRONMENTS','시스템과 환경']];
-quadrants.forEach(([a,start,end,pattern,label,buchananKo])=>{let angle=(start+end)/2,[x,y]=p(157,angle);svg+=`<path d="${map07Sector(cx,cy,100,215,start,end)}" fill="url(#m07-${pattern})"/><g data-map-field="${a}" tabindex="0" role="button" class="map-action" aria-label="${label} / Axis ${a} ${FIELDS[a].ko}"><text x="${x}" y="${y-6}" text-anchor="middle" class="m07-perspective ${a==='D'?'m07-perspective-long':''}">${label}</text><text x="${x}" y="${y+19}" text-anchor="middle" class="m07-perspective-ko">${buchananKo}</text></g>`});
-svg+=`<path d="M${cx-215} ${cy}H${cx-96} M${cx+96} ${cy}H${cx+215} M${cx} ${cy-215}V${cy-96} M${cx} ${cy+96}V${cy+215}" class="m07-ring-spoke"/><text x="${cx}" y="${cy-18}" text-anchor="middle" class="m07-design-problem">DESIGN</text><text x="${cx}" y="${cy+17}" text-anchor="middle" class="m07-design-problem">PROBLEM</text><text x="${cx}" y="${cy+46}" text-anchor="middle" class="m07-design-problem-ko">디자인 문제</text>`;
-const placements={'공간 / 환경':18,'디자인 일반':50,'융합':74,'서비스 / 경험':140,'디지털미디어 / 콘텐츠':180,'시각 / 정보':220,'제품':290,'패션 / 텍스타일':318,'산업공예':347};const axisAngles={A:225,B:315,C:135,D:45};
-const curveArc={'공간 / 환경':20,'디자인 일반':17,'융합':12,'서비스 / 경험':18,'디지털미디어 / 콘텐츠':27,'시각 / 정보':13,'제품':8,'패션 / 텍스타일':16,'산업공예':11};
-const kidpSeq=(typeof window!=='undefined'?(window.__m07KidpSeq=(window.__m07KidpSeq||0)+1):Math.floor(Math.random()*1e6));
-MAP07_DOMAINS.forEach((d,di)=>{let angle=placements[d.name],[x,y]=p(287,angle),[sx,sy]=p(252,angle);d.axes.forEach(a=>{let target=axisAngles[a],delta=((target-angle+540)%360)-180,end=angle+delta,first=p(248,angle),last=p(248,end),endpoint=p(238,end);svg+=`<path d="M${sx} ${sy}L${first[0]} ${first[1]}A248 248 0 0 ${delta>=0?1:0} ${last[0]} ${last[1]}L${endpoint[0]} ${endpoint[1]}" class="m07-classification-link" data-kidp-field="${esc(d.name)}" data-kidp-axis="${a}"><title>${d.name} ↔ AXIS ${a}</title></path>`});
-let dAngle=curveArc[d.name],isTop=angle>180&&angle<360,arcId='m07-kidp-arc-'+kidpSeq+'-'+di,sweep=isTop?1:0,[ax1,ay1]=isTop?p(287,angle-dAngle):p(287,angle+dAngle),[ax2,ay2]=isTop?p(287,angle+dAngle):p(287,angle-dAngle);
-let labelMarkup=`<path id="${arcId}" d="M${ax1} ${ay1}A287 287 0 0 ${sweep} ${ax2} ${ay2}" fill="none"/><text text-anchor="middle" dy="5" class="m07-kidp-label"><textPath href="#${arcId}" startOffset="50%">${esc(d.name)}<tspan dx="8" class="m07-kidp-axes-inline">${esc(d.label||d.axes.join(' · '))}</tspan></textPath></text>`;
-svg+=`<g class="m07-kidp-field" data-kidp-label="${esc(d.name)}"><title>KIDP ${d.name} ↔ ${d.label||d.axes.join(' · ')}</title><circle cx="${sx}" cy="${sy}" r="2.6" class="m07-classification-dot"/>${labelMarkup}</g>`});
-const bandSeq=(typeof window!=='undefined'?(window.__m07BandSeq=(window.__m07BandSeq||0)+1):Math.floor(Math.random()*1e6));
-const band=(r,label,ko,id,cls)=>`<g class="m07-band ${cls}" style="transform-origin:${cx}px ${cy}px"><circle cx="${cx}" cy="${cy}" r="${r}" class="m07-band-ring"/><path id="${id}" d="M${cx-r} ${cy}A${r} ${r} 0 1 1 ${cx+r} ${cy}A${r} ${r} 0 1 1 ${cx-r} ${cy}" fill="none"/><text class="m07-band-text" dy="5"><textPath href="#${id}">${esc(label)}<tspan dx="10" class="m07-band-text-ko">· ${esc(ko)}</tspan></textPath></text></g>`;
-svg+=band(229,'FOUR ORDERS OF DESIGN','Buchanan 네 관점','m07-band-buchanan-'+bandSeq,'m07-band-buchanan');
-svg+=band(308,'NINE DESIGN CATEGORIES','KIDP 아홉 분야','m07-band-kidp-'+bandSeq,'m07-band-kidp');
-const axisSeq=(typeof window!=='undefined'?(window.__m07AxisSeq=(window.__m07AxisSeq||0)+1):Math.floor(Math.random()*1e6));
-quadrants.forEach(([a,start,end])=>{let angle=(start+end)/2,isTop=angle>180&&angle<360,sweep=isTop?1:0,arcId='m07-axis-arc-'+axisSeq+'-'+a,[ax1,ay1]=isTop?p(336,angle-20):p(336,angle+20),[ax2,ay2]=isTop?p(336,angle+20):p(336,angle-20);svg+=`<path d="${map07Arc(cx,cy,388,start+8,end-8)}" style="--field:${FIELDS[a].color}" class="m07-field-arc m07-axis-outer-arc"/><g data-map-field="${a}" tabindex="0" role="button" class="map-action" aria-label="AXIS ${a} / ${FIELDS[a].ko}"><path id="${arcId}" d="M${ax1} ${ay1}A336 336 0 0 ${sweep} ${ax2} ${ay2}" fill="none"/><text text-anchor="middle" dy="6" class="m07-axis-outer-label"><textPath href="#${arcId}" startOffset="50%">AXIS ${a}<tspan dx="8" class="m07-axis-outer-ko-inline">${esc(FIELDS[a].ko)}</tspan></textPath></text></g>`});
-svg+=`<text x="${cx}" y="${cy+416}" text-anchor="middle" class="m07-circle-caption">OUTER RING / AXIS A–D · MIDDLE RING / KIDP 아홉 분야 · INNER RING / Buchanan 네 관점</text></g>`;return svg}
+quadrants.forEach(([a,s,e,pattern,label,ko])=>{let [x,y]=p(131,(s+e)/2);svg+=`<path d="${ring(R.core,R.quad,s,e)}" class="m07c-quad"/><path d="${ring(R.core,R.quad,s,e)}" fill="url(#m07-${pattern})"/><g data-map-field="${a}" tabindex="0" role="button" class="map-action" aria-label="${label} ${ko} / Axis ${a} ${FIELDS[a].ko}"><text x="${x}" y="${y-2}" text-anchor="middle" class="m07c-quad-label ${a==='D'?'m07c-quad-long':''}">${label}</text><text x="${x}" y="${y+18}" text-anchor="middle" class="m07c-quad-ko">${ko}</text></g>`});
+svg+=`<path d="M${cx-R.quad} ${cy}H${cx-R.core} M${cx+R.core} ${cy}H${cx+R.quad} M${cx} ${cy-R.quad}V${cy-R.core} M${cx} ${cy+R.core}V${cy+R.quad}" class="m07-ring-spoke"/>`;
+
+/* 가운데 */
+svg+=`<circle cx="${cx}" cy="${cy}" r="${R.core}" class="m07-hub-fill"/><text x="${cx}" y="${cy-10}" text-anchor="middle" class="m07c-problem">DESIGN</text><text x="${cx}" y="${cy+14}" text-anchor="middle" class="m07c-problem">PROBLEM</text><text x="${cx}" y="${cy+36}" text-anchor="middle" class="m07c-problem-ko">디자인 문제</text>`;
+
+svg+=`<text x="${cx}" y="${cy+418}" text-anchor="middle" class="m07-circle-caption">안쪽부터 Buchanan의 네 영역 · KIDP 9개 분야 · 4대 상위 축. 네 영역은 같은 크기로 두어 위계를 뜻하지 않습니다.</text><text x="${cx}" y="${cy+434}" text-anchor="middle" class="m07-circle-caption">분야 아래 표기는 그 분야가 걸치는 축이며 앞의 것이 주로 대응시킨 축입니다. 대응과 걸침은 본 연구의 해석입니다(그림 2-2).</text></g>`;
+return svg}
