@@ -371,7 +371,7 @@ html[data-theme=dark] img.custom-logo{filter:none}
 .m07c-axis:hover .m07c-axis-arc,.m07c-axis:focus-visible .m07c-axis-arc{opacity:.82}
 
 /* 원형 세 층위: 움직임과 롤오버 */
-.m07c-band-text{font-size:11.5px;font-weight:700;letter-spacing:.9px}
+.m07c-band-text{font-size:15px;font-weight:700;letter-spacing:1.4px}
 .m07c-band-ko{font-weight:600;letter-spacing:0}
 .m07c-flow{opacity:.42;transition:opacity .3s ease}
 .m07c-flow path{stroke:none}
