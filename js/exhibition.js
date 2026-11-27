@@ -62,7 +62,7 @@ function exhibitField(a,x,y){
  const marks=entries.map(([id,d],i)=>{
   const [r,h]=d[exState][exStep],gx=AI.indexOf(r)*34+17+(i-1)*8,gy=(3-HUMAN.indexOf(h))*32+16;
   tallies[r]=(tallies[r]||0)+1;
-  return `<circle cx="${gx}" cy="${gy}" r="3.8" fill="${f.color}"><title>${id} · ${ROLES[r].ko} × ${ROLES[h].ko}</title></circle>`
+  return `<circle data-pid="${id}" cx="${gx}" cy="${gy}" r="3.8" fill="${f.color}"><title>${id} · ${ROLES[r].ko} × ${ROLES[h].ko}</title></circle>`
  }).join('');
  const [r,n]=Object.entries(tallies).sort((a,b)=>b[1]-a[1])[0];
  const chosen=axis===a;

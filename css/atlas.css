@@ -476,3 +476,14 @@ aside #app-modes a.active :is(b,small,span),aside #app-modes a[aria-current=page
 #map-tip-line{position:fixed;z-index:9999;height:0;border-top:1.2px dashed color-mix(in srgb,var(--ink) 70%,transparent);transform-origin:0 0;pointer-events:none}
 #map-tip-line[hidden]{display:none}
 @media(prefers-reduced-motion:reduce){#map-tip-card{transition:none}}
+
+/* 모션 (js/motion.js) */
+.exhibition-plate .m07c-axis,.exhibition-plate .order-region,.exhibition-plate .m07c-kidp,.exhibition-plate .field-inset{transition:opacity .35s ease}
+.exhibition-plate .dim{opacity:.22}
+.exhibition-plate .order-region.dim{opacity:.3}
+.ex-stages.has-ind{position:relative}
+.ex-stages .ex-stage-ind{position:absolute;top:0;bottom:0;z-index:0;pointer-events:none}
+.ex-stages.has-ind>button{position:relative;z-index:1}
+.ex-stages.has-ind>button[aria-pressed="true"]{background:transparent!important}
+#kiosk-badge{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9000;font:600 12px/1 Arial,sans-serif;letter-spacing:.06em;padding:8px 14px;background:color-mix(in srgb,var(--paper) 80%,transparent);backdrop-filter:blur(10px);border:1px solid color-mix(in srgb,var(--ink) 20%,transparent);color:var(--ink)}
+#kiosk-badge[hidden]{display:none}

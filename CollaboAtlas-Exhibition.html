@@ -477,6 +477,17 @@ aside #app-modes a.active :is(b,small,span),aside #app-modes a[aria-current=page
 #map-tip-line{position:fixed;z-index:9999;height:0;border-top:1.2px dashed color-mix(in srgb,var(--ink) 70%,transparent);transform-origin:0 0;pointer-events:none}
 #map-tip-line[hidden]{display:none}
 @media(prefers-reduced-motion:reduce){#map-tip-card{transition:none}}
+
+/* 모션 (js/motion.js) */
+.exhibition-plate .m07c-axis,.exhibition-plate .order-region,.exhibition-plate .m07c-kidp,.exhibition-plate .field-inset{transition:opacity .35s ease}
+.exhibition-plate .dim{opacity:.22}
+.exhibition-plate .order-region.dim{opacity:.3}
+.ex-stages.has-ind{position:relative}
+.ex-stages .ex-stage-ind{position:absolute;top:0;bottom:0;z-index:0;pointer-events:none}
+.ex-stages.has-ind>button{position:relative;z-index:1}
+.ex-stages.has-ind>button[aria-pressed="true"]{background:transparent!important}
+#kiosk-badge{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9000;font:600 12px/1 Arial,sans-serif;letter-spacing:.06em;padding:8px 14px;background:color-mix(in srgb,var(--paper) 80%,transparent);backdrop-filter:blur(10px);border:1px solid color-mix(in srgb,var(--ink) 20%,transparent);color:var(--ink)}
+#kiosk-badge[hidden]{display:none}
 </style></head><body><header><a href="#atlas" class="brand" aria-label="CollaboAtlas 전체 지도"><img class="custom-logo logo-light" src="assets/wordmark/CollaboAtlas_custom_header_light.svg" alt="CollaboAtlas — DESIGNER × AI"><img class="custom-logo logo-dark" src="assets/wordmark/CollaboAtlas_custom_header_dark.svg" alt="CollaboAtlas — DESIGNER × AI"></a><span class="header-context">ANATOMY OF<br>DESIGN COLLABORATION</span><div class="field-switch"><small>REFERENCE DOMAIN / 참고 분야</small><div id="field-switch"></div></div><button id="sitemap-open" type="button" aria-haspopup="dialog" aria-controls="sitemap-panel">사이트맵</button><button id="theme-toggle" type="button" aria-label="다크 모드로 전환" aria-pressed="false">◐ Dark / 다크</button></header><div class="app-shell"><aside><nav id="app-modes" aria-label="두 핵심 기능"></nav><div class="index-caption">INDEX / READ · EXPLORE · RECORD</div><nav id="navigation"></nav><div class="sidebar-note"><i></i>관계는 고정되지 않는다.<br>역할과 판단을 함께 읽는다.<small>SURVEY n=43 / INTERVIEWS n=12</small></div></aside><main id="main" tabindex="-1"><p class="loading">Loading the atlas / 연구 지도를 불러오는 중입니다.</p></main></div><footer><span>SBRT / RESEARCH → PRACTICE</span><span>DATA · CONCEPT · RECORD</span><span>LOCAL-FIRST / ON THIS DEVICE</span></footer><div id="toast" role="status" aria-live="polite"></div><dialog id="confirm-dialog" aria-labelledby="confirm-title"><h2 id="confirm-title"></h2><p id="confirm-body"></p><div class="button-row"><button id="confirm-cancel">Cancel / 취소</button><button id="confirm-apply" class="danger">확인한 범위 삭제</button></div></dialog><section id="report" hidden></section><input id="backup-input" type="file" accept="application/json,.json" hidden><script>const AI=['Ge','As','Ad','Co'], HUMAN=['E','I','O','V'];
 const ROLES={Ge:{en:'Generator',ko:'생성자',action:'요청을 여러 대안으로 펼칩니다.',file:'04_AI_role_diagrams/Generator.svg'},As:{en:'Assistant',ko:'보조자',action:'사람이 정한 작업 범위를 수행합니다.',file:'04_AI_role_diagrams/Assistant.svg'},Ad:{en:'Advisor',ko:'조언자',action:'기존 안을 검토하고 피드백을 제공합니다.',file:'04_AI_role_diagrams/Advisor.svg'},Co:{en:'Co-creator',ko:'공동 창작자',action:'공유한 작업 대상을 대화하며 발전시킵니다.',file:'04_AI_role_diagrams/Co_creator.svg'},E:{en:'Evaluator',ko:'평가자',action:'기준에 비추어 선택하거나 제외합니다.',file:'05_designer_role_diagrams/Evaluator.svg'},I:{en:'Interpreter',ko:'해석자',action:'맥락에 비추어 의미를 해석하고 재구성합니다.',file:'05_designer_role_diagrams/Interpreter.svg'},O:{en:'Orchestrator',ko:'조율자',action:'도구·작업·자원과 순서를 조율합니다.',file:'05_designer_role_diagrams/Orchestrator.svg'},V:{en:'Value-creator',ko:'가치 창출자',action:'목적과 가치를 정의하고 판단에 반영합니다.' ,file:'05_designer_role_diagrams/Value_creator.svg'}};
 const FIELDS={A:{en:'Symbols & Meaning',ko:'기호·의미 중심',includes:'시각·정보·브랜딩·디지털미디어',color:'#E94B29',file:'01_fields/A_field.svg',focus:'기호가 맥락 속에서 어떤 의미로 읽히는가',boundary:'메시지의 해석과 의미 전달을 중심으로 살펴봅니다.'},B:{en:'Things & Artifacts',ko:'사물·인공물 중심',includes:'제품·패션·텍스타일·산업공예',color:'#286B9A',file:'01_fields/B_field.svg',focus:'형태·재료·제작 조건이 사용 경험을 어떻게 만드는가',boundary:'물리적 형태와 물성, 제작 가능성을 함께 살펴봅니다.'},C:{en:'Actions & Interaction',ko:'행동·인터랙션 중심',includes:'UI/UX·인터랙션',color:'#34735C',file:'01_fields/C_field.svg',focus:'사람의 행동과 환경의 응답은 어떻게 이어지는가',boundary:'사용자 행동과 인터페이스·환경의 접점을 살펴봅니다.'},D:{en:'Systems & Services',ko:'시스템·서비스 중심',includes:'서비스·경험·융합·전략',color:'#77568D',file:'01_fields/D_field.svg',focus:'이해관계자·자원·운영이 어떤 관계로 연결되는가',boundary:'관계와 운영 구조, 서비스의 전체 작동을 살펴봅니다.'}};
@@ -785,7 +796,7 @@ function exhibitField(a,x,y){
  const marks=entries.map(([id,d],i)=>{
   const [r,h]=d[exState][exStep],gx=AI.indexOf(r)*34+17+(i-1)*8,gy=(3-HUMAN.indexOf(h))*32+16;
   tallies[r]=(tallies[r]||0)+1;
-  return `<circle cx="${gx}" cy="${gy}" r="3.8" fill="${f.color}"><title>${id} · ${ROLES[r].ko} × ${ROLES[h].ko}</title></circle>`
+  return `<circle data-pid="${id}" cx="${gx}" cy="${gy}" r="3.8" fill="${f.color}"><title>${id} · ${ROLES[r].ko} × ${ROLES[h].ko}</title></circle>`
  }).join('');
  const [r,n]=Object.entries(tallies).sort((a,b)=>b[1]-a[1])[0];
  const chosen=axis===a;
@@ -851,4 +862,66 @@ trigger.onclick=()=>{const current=['define','ideate','evaluate','deliver'].incl
 dlg.querySelector('nav').innerHTML=[...new Set(sections.map(s=>s[0]))].map(g=>'<section><h3>'+g+'</h3>'+sections.map(([group,r,name,panel],i)=>{if(group!==g)return '';const here=r===current&&(!panel||researchPanel===panel);return '<a href="#'+r+'" data-dest="'+i+'" '+(here?'aria-current="page"':'')+'>'+name+(here?'<small>현재 위치</small>':'')+'</a>'}).join('')+'</section>').join('');dlg.showModal()};
 dlg.querySelector('nav').onclick=e=>{const a=e.target.closest('[data-dest]');if(!a)return;e.preventDefault();const [,r,,panel]=sections[Number(a.dataset.dest)];if(!canLeaveDraft())return;draftDirty=false;dlg.close();if(panel){researchPanel=panel;if(panel==='sbrt'){modelField='all';modelStage=-1}}navigate(r);main.focus()};
 dlg.addEventListener('click',e=>{if(e.target===dlg){const b=dlg.getBoundingClientRect();if(e.clientX<b.left||e.clientX>b.right||e.clientY<b.top||e.clientY>b.bottom)dlg.close()}});
-})();</script></body></html>
+})();</script><script>/* CollaboAtlas 모션 (11/28): 기존 렌더링은 그대로 두고 그 위에 얹는다. 이 파일만 빼면 이전 동작으로 돌아간다.
+   1 포커스: 분야·패널·분류 칸에 올리면 관련 없는 부분이 옅어진다.
+   2 전환: 단계·실제/이상을 바꾸면 같은 사람의 점이 새 칸으로 미끄러지고, 단계 바 표시가 옆으로 미끄러진다.
+     (점의 이동은 같은 사람의 배치 비교이며 권장 경로가 아니다.)
+   3 첫 진입: 원이 중심에서 바깥으로 펼쳐지고, 이어서 점이 내려앉는다(페이지를 열 때 한 번).
+   4 대기 모드: 주소에 ?kiosk가 있을 때만. 30초 동안 입력이 없으면 단계를 6초마다 넘기고, 한 바퀴마다 실제/이상을 바꾼다. */
+(()=>{
+const still=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const EASE='cubic-bezier(.2,.8,.2,1)';
+let entered=false,stageInd=null;
+
+/* ---------- 2. 전환: 점과 단계 표시 ---------- */
+function dotPositions(){const m=new Map();document.querySelectorAll('.field-inset circle[data-pid]').forEach(c=>{const r=c.getBoundingClientRect();m.set(c.dataset.pid,{x:r.left+r.width/2,y:r.top+r.height/2})});return m}
+function slideDots(before){if(still||!before.size)return;
+ const svg=document.querySelector('.exhibition-plate');if(!svg)return;const k=svg.getScreenCTM()?.a||1;let i=0;
+ document.querySelectorAll('.field-inset circle[data-pid]').forEach(c=>{const o=before.get(c.dataset.pid);if(!o)return;const r=c.getBoundingClientRect(),dx=(o.x-(r.left+r.width/2))/k,dy=(o.y-(r.top+r.height/2))/k;
+  if(Math.abs(dx)<.5&&Math.abs(dy)<.5)return;
+  c.animate([{transform:`translate(${dx}px,${dy}px)`},{transform:'translate(0,0)'}],{duration:720,delay:(i++%3)*60,easing:EASE,fill:'backwards'});
+  c.animate([{r:3.8},{r:6},{r:3.8}],{duration:720,delay:(i%3)*60,easing:'ease-in-out'})});
+ document.querySelectorAll('.field-inset .inset-pair tspan+tspan, .field-inset .inset-ko:last-of-type').forEach(t=>t.animate([{opacity:.15},{opacity:1}],{duration:500,easing:'ease-out'}))}
+function placeStage(prev){const bar=document.querySelector('.ex-stages');if(!bar)return;const on=bar.querySelector('button[aria-pressed="true"]');if(!on)return;
+ const col=getComputedStyle(on).backgroundColor;let ind=bar.querySelector('.ex-stage-ind');if(!ind){ind=document.createElement('i');ind.className='ex-stage-ind';bar.prepend(ind)}
+ ind.style.background=col;bar.classList.add('has-ind');const b=bar.getBoundingClientRect(),r=on.getBoundingClientRect(),next={left:r.left-b.left,width:r.width};
+ if(prev&&!still){ind.animate([{left:prev.left+'px',width:prev.width+'px'},{left:next.left+'px',width:next.width+'px'}],{duration:480,easing:EASE})}
+ ind.style.left=next.left+'px';ind.style.width=next.width+'px';stageInd=next}
+
+/* ---------- 3. 첫 진입 ---------- */
+function enter(){if(entered||still)return;const svg=document.querySelector('.exhibition-plate');const g=svg?.querySelector('.m07c');if(!g)return;entered=true;
+ const NS='http://www.w3.org/2000/svg',id='m07c-reveal',defs=svg.querySelector('defs')||svg.insertBefore(document.createElementNS(NS,'defs'),svg.firstChild);
+ const cp=document.createElementNS(NS,'clipPath');cp.id=id;const c=document.createElementNS(NS,'circle');c.setAttribute('cx',870);c.setAttribute('cy',625);c.setAttribute('r',0);cp.appendChild(c);defs.appendChild(cp);
+ g.setAttribute('clip-path',`url(#${id})`);const t0=performance.now(),D=1250;
+ (function step(now){const p=Math.max(0,Math.min(1,(now-t0)/D)),e=1-Math.pow(1-p,3);c.setAttribute('r',(e*470).toFixed(1));if(p<1)requestAnimationFrame(step);else{g.removeAttribute('clip-path');cp.remove()}})(t0);
+ svg.querySelectorAll('.field-inset').forEach((f,i)=>f.animate([{opacity:0},{opacity:1}],{duration:600,delay:700+i*110,easing:EASE,fill:'backwards'}));
+ svg.querySelectorAll('.field-inset circle[data-pid]').forEach((d,i)=>d.animate([{opacity:0,transform:'translateY(-22px)'},{opacity:1,transform:'none'}],{duration:620,delay:1150+i*55,easing:'cubic-bezier(.3,1.4,.5,1)',fill:'backwards'}))}
+
+/* ---------- render 감싸기 ---------- */
+const base=render;
+render=function(){const atlasBefore=!!document.querySelector('.ex-final .exhibition-plate'),before=atlasBefore?dotPositions():new Map(),prev=stageInd;
+ base.apply(this,arguments);
+ if(!document.querySelector('.ex-final .exhibition-plate')){stageInd=null;return}
+ placeStage(atlasBefore?prev:null);if(atlasBefore)slideDots(before);else enter();bindFocus()};
+
+/* ---------- 1. 포커스 ---------- */
+function axesOf(el){if(el.dataset.hot)return el.dataset.hot.split(' ');if(el.dataset.mapField)return[el.dataset.mapField];return[]}
+function bindFocus(){const svg=document.querySelector('.exhibition-plate');if(!svg||svg.dataset.focusBound)return;svg.dataset.focusBound='1';
+ const items=[...svg.querySelectorAll('[data-map-field],[data-hot]')];
+ const set=src=>{if(!src){svg.removeAttribute('data-focus');items.forEach(x=>x.classList.remove('dim'));return}
+  const F=axesOf(src),all=F.length===4,kidp=src.hasAttribute('data-kidp-label');svg.setAttribute('data-focus',F.join(''));
+  items.forEach(x=>{let keep;if(x===src||all)keep=true;else if(x.hasAttribute('data-kidp-label'))keep=!kidp&&axesOf(x).includes(F[0])||x.classList.contains('m07c-all');else keep=F.includes(x.dataset.mapField);x.classList.toggle('dim',!keep)})};
+ svg.addEventListener('pointerover',e=>{const el=e.target.closest('[data-map-field],[data-hot]');set(el&&svg.contains(el)?el:null)});
+ svg.addEventListener('pointerleave',()=>set(null));svg.addEventListener('focusin',e=>{const el=e.target.closest('[data-map-field],[data-hot]');if(el)set(el)});svg.addEventListener('focusout',()=>set(null))}
+
+/* ---------- 4. 대기 모드(?kiosk) ---------- */
+if(new URLSearchParams(location.search).has('kiosk')){let idle=null,tick=null;const WAIT=30000,STEP=6000;
+ const badge=document.createElement('div');badge.id='kiosk-badge';badge.textContent='AUTO · 단계별 배치가 자동으로 넘어갑니다';badge.hidden=true;document.body.appendChild(badge);
+ const stop=()=>{clearInterval(tick);tick=null;badge.hidden=true;clearTimeout(idle);idle=setTimeout(start,WAIT)};
+ const start=()=>{if(route!=='atlas'){stop();return}badge.hidden=false;tick=setInterval(()=>{if(route!=='atlas'){stop();return}exStep=(exStep+1)%4;if(exStep===0)exState=exState==='actual'?'ideal':'actual';render()},STEP)};
+ ['pointerdown','keydown','wheel','touchstart'].forEach(ev=>addEventListener(ev,stop,{passive:true}));addEventListener('pointermove',e=>{if(e.movementX||e.movementY)stop()},{passive:true});stop()}
+
+/* 첫 화면이 이미 그려져 있으면 바로 연출 */
+if(document.querySelector('.ex-final .exhibition-plate')){placeStage(null);enter();bindFocus()}
+})();
+</script></body></html>
