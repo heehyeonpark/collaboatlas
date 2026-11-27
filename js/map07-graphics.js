@@ -37,10 +37,11 @@ Object.entries(AX).forEach(([a,[s,e]])=>{svg+=`<g data-map-field="${a}" tabindex
 
 /* KIDP 이름 띠 */
 const band=(r,w,label,ko,cls,dir)=>{
- const paths=[0,180].map(angle=>{
- const id='ring-'+seq+'-'+(n++), len=Math.PI*r*.89;
- return `<g transform="rotate(${angle} ${cx} ${cy})"><path id="${id}" d="M${cx-r} ${cy} A${r} ${r} 0 0 1 ${cx+r} ${cy}" fill="none"/><text dy="5" text-anchor="middle" class="m07c-band-text"><textPath href="#${id}" startOffset="50%">${esc(label)}　·　${esc(ko)}</textPath></text></g>`});
- return `<g class="m07c-band ${cls}"><circle cx="${cx}" cy="${cy}" r="${r}" class="m07c-band-ring" style="stroke-width:${w}"/><g class="solid-text-ring" style="animation-delay:-${(performance.now()/1000)%105}s;transform-origin:${cx}px ${cy}px;animation-direction:${dir>0?'normal':'reverse'}">${paths.join('')}</g></g>`;
+ /* 띠 폭과 글자 크기는 그대로. 문구는 원을 따라 돌되 위·아래 반원에서 각각 똑바로 서고, 3시·9시 근처에서 옅어졌다가 반대쪽에서 다시 나타난다. */
+ const top='ring-'+seq+'-'+(n++),bot='ring-'+seq+'-'+(n++),mk='ringmask-'+seq+'-'+(n++),gr='ringgrad-'+seq+'-'+(n++),H=Math.PI*r;
+ const node=(path,k,half)=>`<text dy="5" text-anchor="middle" class="m07c-band-text"><textPath href="#${path}" class="m07c-flowtext" data-h="${H}" data-k="${k}" data-half="${half}" data-dir="${dir}" startOffset="${k?-H:H/2}">${esc(label)}　·　${esc(ko)}</textPath></text>`;
+ let texts='';[0,1].forEach(k=>{texts+=node(top,k,'t')+node(bot,k,'b')});
+ return `<g class="m07c-band ${cls}"><defs><linearGradient id="${gr}" gradientUnits="userSpaceOnUse" x1="${cx-r}" y1="0" x2="${cx+r}" y2="0"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".07" stop-color="#fff" stop-opacity="0"/><stop offset=".22" stop-color="#fff" stop-opacity="1"/><stop offset=".78" stop-color="#fff" stop-opacity="1"/><stop offset=".93" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient><mask id="${mk}" maskUnits="userSpaceOnUse" x="${cx-r-w}" y="${cy-r-w}" width="${2*(r+w)}" height="${2*(r+w)}"><rect x="${cx-r-w}" y="${cy-r-w}" width="${2*(r+w)}" height="${2*(r+w)}" fill="url(#${gr})"/></mask></defs><circle cx="${cx}" cy="${cy}" r="${r}" class="m07c-band-ring" style="stroke-width:${w}"/><path id="${top}" d="M${cx-r} ${cy}A${r} ${r} 0 0 1 ${cx+r} ${cy}" fill="none"/><path id="${bot}" d="M${cx-r} ${cy}A${r} ${r} 0 0 0 ${cx+r} ${cy}" fill="none"/><g mask="url(#${mk})">${texts}</g></g>`;
 };
 svg+=band((R.mix2+R.bandK)/2,R.bandK-R.mix2,'NINE DESIGN CATEGORIES','KIDP(2019) 9개 분야','m07c-band-kidp',-1);
 
@@ -73,3 +74,15 @@ svg+=tips.join('');
 svg+=`<text x="${cx}" y="${cy+418}" text-anchor="middle" class="m07-circle-caption">안쪽부터 Buchanan의 네 영역 · KIDP 9개 분야 · 4대 상위 축. 네 영역은 같은 크기로 두어 위계를 뜻하지 않습니다.</text><text x="${cx}" y="${cy+434}" text-anchor="middle" class="m07-circle-caption">분야 아래 표기는 그 분야가 걸치는 축이며 앞의 것이 주로 대응시킨 축입니다. 대응과 걸침은 본 연구의 해석입니다(그림 2-2).</text></g>`;
 return svg}
 
+/* 이름 띠의 흐름: 위·아래 반원이 각자 문구를 흘려보낸다(위는 왼→오, 아래는 오→왼으로 한 방향 회전처럼 읽힘).
+   문구는 반원 끝에서 옅어지며 빠져나가므로 끝에서 잘리거나 두 반원에 겹쳐 보이지 않는다. */
+(function(){if(typeof window==='undefined'||window.__m07Flow)return;window.__m07Flow=true;
+const still=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches,PERIOD=105,t0=performance.now();
+function frame(now){document.querySelectorAll('textPath.m07c-flowtext').forEach(tp=>{const H=+tp.dataset.h,k=+tp.dataset.k,dir=+tp.dataset.dir||1,bottom=tp.dataset.half==='b';
+ let L=+tp.dataset.len;if(!L){try{L=tp.parentNode.getComputedTextLength()}catch(e){L=0}if(!L)return;tp.dataset.len=L}
+ const P=H+L,v=2*H/PERIOD,s=still?0:((now-t0)/1000)*v;
+ let pos=(((s+k*P/2+(bottom?P/4:0)+H/2+L/2)%P)+P)%P-L/2;   // 반원 위의 중심 위치(-L/2 ~ H+L/2)
+ if(dir<0)pos=H-pos;if(bottom)pos=H-pos;
+ tp.setAttribute('startOffset',pos.toFixed(1))});
+ if(!still)requestAnimationFrame(frame)}
+requestAnimationFrame(frame);if(still)setInterval(()=>requestAnimationFrame(frame),1500)})();
