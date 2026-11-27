@@ -1,0 +1,1 @@
+document.addEventListener('click',e=>{const a=e.target.closest('[data-open-model]');if(a){modelField='all';modelStage=-1;researchPanel='sbrt';if(route==='model')render()}},true);
