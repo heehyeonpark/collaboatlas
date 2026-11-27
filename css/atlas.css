@@ -465,3 +465,24 @@ aside #app-modes a.active :is(b,small,span),aside #app-modes a[aria-current=page
 /* SBRT 결론 문장 */
 .ex-conclusion{font-size:clamp(22px,2.3vw,32px);font-weight:800;line-height:1.35;letter-spacing:-.02em;margin:18px 0 12px;max-width:30em}
 .ex-cite{color:var(--muted);font-size:12px;margin-left:8px}
+
+/* 롤오버 설명: 유리 카드(기본) — 원 바깥에 뜨고 커서와 선으로 이어짐 */
+.m07c-tip{display:none}
+#map-tip-card{background:color-mix(in srgb,var(--paper) 74%,transparent);color:var(--ink);-webkit-backdrop-filter:blur(14px) saturate(1.15);backdrop-filter:blur(14px) saturate(1.15);border:1px solid color-mix(in srgb,var(--ink) 14%,transparent);border-left:3px solid var(--tone,var(--ink));box-shadow:0 10px 30px -12px #0003;padding:12px 16px 12px 14px;max-width:min(290px,80vw);opacity:0;transform:translateY(4px);transition:opacity .18s ease,transform .18s ease,left .12s ease-out,top .12s ease-out}
+#map-tip-card.in{opacity:1;transform:none}
+#map-tip-card b{font-size:15px;letter-spacing:-.01em}
+#map-tip-card p{margin:6px 0 6px;font-size:13px;line-height:1.5}
+#map-tip-card small{color:var(--muted);opacity:1;font-size:11px}
+#map-tip-line{position:fixed;z-index:9999;height:0;border-top:1.2px dashed color-mix(in srgb,var(--ink) 70%,transparent);transform-origin:0 0;pointer-events:none}
+#map-tip-line[hidden]{display:none}
+@media(prefers-reduced-motion:reduce){#map-tip-card{transition:none}}
+/* 가운데 설명판(?tip=hub) */
+html[data-tip-mode=hub] #map-tip-card,html[data-tip-mode=hub] #map-tip-line{display:none!important}
+.m07c-hub-default,.m07c-hub-read{transition:opacity .2s ease}
+.m07c-hub-read{opacity:0;pointer-events:none}
+.m07c.hub-on .m07c-hub-default{opacity:0}
+.m07c.hub-on .m07c-hub-read{opacity:1}
+.m07c-hub-title{font-size:17px;font-weight:800;letter-spacing:-.3px;fill:var(--paper)}
+.m07c-hub-tag{font-size:10.5px;font-weight:700;letter-spacing:.6px;fill:var(--hub-tone,var(--paper));filter:brightness(1.35)}
+.m07c.hub-on .m07c-cap-1{fill:var(--ink);font-size:12px;font-weight:600}
+.m07c-cap-1,.m07c-cap-2{transition:fill .2s ease}

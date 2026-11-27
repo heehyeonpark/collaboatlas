@@ -466,6 +466,27 @@ aside #app-modes a.active :is(b,small,span),aside #app-modes a[aria-current=page
 /* SBRT 결론 문장 */
 .ex-conclusion{font-size:clamp(22px,2.3vw,32px);font-weight:800;line-height:1.35;letter-spacing:-.02em;margin:18px 0 12px;max-width:30em}
 .ex-cite{color:var(--muted);font-size:12px;margin-left:8px}
+
+/* 롤오버 설명: 유리 카드(기본) — 원 바깥에 뜨고 커서와 선으로 이어짐 */
+.m07c-tip{display:none}
+#map-tip-card{background:color-mix(in srgb,var(--paper) 74%,transparent);color:var(--ink);-webkit-backdrop-filter:blur(14px) saturate(1.15);backdrop-filter:blur(14px) saturate(1.15);border:1px solid color-mix(in srgb,var(--ink) 14%,transparent);border-left:3px solid var(--tone,var(--ink));box-shadow:0 10px 30px -12px #0003;padding:12px 16px 12px 14px;max-width:min(290px,80vw);opacity:0;transform:translateY(4px);transition:opacity .18s ease,transform .18s ease,left .12s ease-out,top .12s ease-out}
+#map-tip-card.in{opacity:1;transform:none}
+#map-tip-card b{font-size:15px;letter-spacing:-.01em}
+#map-tip-card p{margin:6px 0 6px;font-size:13px;line-height:1.5}
+#map-tip-card small{color:var(--muted);opacity:1;font-size:11px}
+#map-tip-line{position:fixed;z-index:9999;height:0;border-top:1.2px dashed color-mix(in srgb,var(--ink) 70%,transparent);transform-origin:0 0;pointer-events:none}
+#map-tip-line[hidden]{display:none}
+@media(prefers-reduced-motion:reduce){#map-tip-card{transition:none}}
+/* 가운데 설명판(?tip=hub) */
+html[data-tip-mode=hub] #map-tip-card,html[data-tip-mode=hub] #map-tip-line{display:none!important}
+.m07c-hub-default,.m07c-hub-read{transition:opacity .2s ease}
+.m07c-hub-read{opacity:0;pointer-events:none}
+.m07c.hub-on .m07c-hub-default{opacity:0}
+.m07c.hub-on .m07c-hub-read{opacity:1}
+.m07c-hub-title{font-size:17px;font-weight:800;letter-spacing:-.3px;fill:var(--paper)}
+.m07c-hub-tag{font-size:10.5px;font-weight:700;letter-spacing:.6px;fill:var(--hub-tone,var(--paper));filter:brightness(1.35)}
+.m07c.hub-on .m07c-cap-1{fill:var(--ink);font-size:12px;font-weight:600}
+.m07c-cap-1,.m07c-cap-2{transition:fill .2s ease}
 </style></head><body><header><a href="#atlas" class="brand" aria-label="CollaboAtlas 전체 지도"><img class="custom-logo logo-light" src="assets/wordmark/CollaboAtlas_custom_header_light.svg" alt="CollaboAtlas — DESIGNER × AI"><img class="custom-logo logo-dark" src="assets/wordmark/CollaboAtlas_custom_header_dark.svg" alt="CollaboAtlas — DESIGNER × AI"></a><span class="header-context">ANATOMY OF<br>DESIGN COLLABORATION</span><div class="field-switch"><small>REFERENCE DOMAIN / 참고 분야</small><div id="field-switch"></div></div><button id="sitemap-open" type="button" aria-haspopup="dialog" aria-controls="sitemap-panel">사이트맵</button><button id="theme-toggle" type="button" aria-label="다크 모드로 전환" aria-pressed="false">◐ Dark / 다크</button></header><div class="app-shell"><aside><nav id="app-modes" aria-label="두 핵심 기능"></nav><div class="index-caption">INDEX / READ · EXPLORE · RECORD</div><nav id="navigation"></nav><div class="sidebar-note"><i></i>관계는 고정되지 않는다.<br>역할과 판단을 함께 읽는다.<small>SURVEY n=43 / INTERVIEWS n=12</small></div></aside><main id="main" tabindex="-1"><p class="loading">Loading the atlas / 연구 지도를 불러오는 중입니다.</p></main></div><footer><span>SBRT / RESEARCH → PRACTICE</span><span>DATA · CONCEPT · RECORD</span><span>LOCAL-FIRST / ON THIS DEVICE</span></footer><div id="toast" role="status" aria-live="polite"></div><dialog id="confirm-dialog" aria-labelledby="confirm-title"><h2 id="confirm-title"></h2><p id="confirm-body"></p><div class="button-row"><button id="confirm-cancel">Cancel / 취소</button><button id="confirm-apply" class="danger">확인한 범위 삭제</button></div></dialog><section id="report" hidden></section><input id="backup-input" type="file" accept="application/json,.json" hidden><script>const AI=['Ge','As','Ad','Co'], HUMAN=['E','I','O','V'];
 const ROLES={Ge:{en:'Generator',ko:'생성자',action:'요청을 여러 대안으로 펼칩니다.',file:'04_AI_role_diagrams/Generator.svg'},As:{en:'Assistant',ko:'보조자',action:'사람이 정한 작업 범위를 수행합니다.',file:'04_AI_role_diagrams/Assistant.svg'},Ad:{en:'Advisor',ko:'조언자',action:'기존 안을 검토하고 피드백을 제공합니다.',file:'04_AI_role_diagrams/Advisor.svg'},Co:{en:'Co-creator',ko:'공동 창작자',action:'공유한 작업 대상을 대화하며 발전시킵니다.',file:'04_AI_role_diagrams/Co_creator.svg'},E:{en:'Evaluator',ko:'평가자',action:'기준에 비추어 선택하거나 제외합니다.',file:'05_designer_role_diagrams/Evaluator.svg'},I:{en:'Interpreter',ko:'해석자',action:'맥락에 비추어 의미를 해석하고 재구성합니다.',file:'05_designer_role_diagrams/Interpreter.svg'},O:{en:'Orchestrator',ko:'조율자',action:'도구·작업·자원과 순서를 조율합니다.',file:'05_designer_role_diagrams/Orchestrator.svg'},V:{en:'Value-creator',ko:'가치 창출자',action:'목적과 가치를 정의하고 판단에 반영합니다.' ,file:'05_designer_role_diagrams/Value_creator.svg'}};
 const FIELDS={A:{en:'Symbols & Meaning',ko:'기호·의미 중심',includes:'시각·정보·브랜딩·디지털미디어',color:'#E94B29',file:'01_fields/A_field.svg',focus:'기호가 맥락 속에서 어떤 의미로 읽히는가',boundary:'메시지의 해석과 의미 전달을 중심으로 살펴봅니다.'},B:{en:'Things & Artifacts',ko:'사물·인공물 중심',includes:'제품·패션·텍스타일·산업공예',color:'#286B9A',file:'01_fields/B_field.svg',focus:'형태·재료·제작 조건이 사용 경험을 어떻게 만드는가',boundary:'물리적 형태와 물성, 제작 가능성을 함께 살펴봅니다.'},C:{en:'Actions & Interaction',ko:'행동·인터랙션 중심',includes:'UI/UX·인터랙션',color:'#34735C',file:'01_fields/C_field.svg',focus:'사람의 행동과 환경의 응답은 어떻게 이어지는가',boundary:'사용자 행동과 인터페이스·환경의 접점을 살펴봅니다.'},D:{en:'Systems & Services',ko:'시스템·서비스 중심',includes:'서비스·경험·융합·전략',color:'#77568D',file:'01_fields/D_field.svg',focus:'이해관계자·자원·운영이 어떤 관계로 연결되는가',boundary:'관계와 운영 구조, 서비스의 전체 작동을 살펴봅니다.'}};
@@ -581,11 +602,11 @@ quadrants.forEach(([a,s,e,pattern,label,ko])=>{let [x,y]=p(131,(s+e)/2);svg+=`<g
 svg+=`<path d="M${cx-R.quad} ${cy}H${cx-R.core} M${cx+R.core} ${cy}H${cx+R.quad} M${cx} ${cy-R.quad}V${cy-R.core} M${cx} ${cy+R.core}V${cy+R.quad}" class="m07-ring-spoke"/>`;
 
 /* 가운데 */
-svg+=`<circle cx="${cx}" cy="${cy}" r="${R.core}" class="m07-hub-fill"/><text x="${cx}" y="${cy-10}" text-anchor="middle" class="m07c-problem">DESIGN</text><text x="${cx}" y="${cy+14}" text-anchor="middle" class="m07c-problem">PROBLEM</text><text x="${cx}" y="${cy+36}" text-anchor="middle" class="m07c-problem-ko">디자인 문제</text>`;
+svg+=`<circle cx="${cx}" cy="${cy}" r="${R.core}" class="m07-hub-fill"/><g class="m07c-hub-default"><text x="${cx}" y="${cy-10}" text-anchor="middle" class="m07c-problem">DESIGN</text><text x="${cx}" y="${cy+14}" text-anchor="middle" class="m07c-problem">PROBLEM</text><text x="${cx}" y="${cy+36}" text-anchor="middle" class="m07c-problem-ko">디자인 문제</text></g><g class="m07c-hub-read"><text x="${cx}" y="${cy-4}" text-anchor="middle" class="m07c-hub-tag"></text><text x="${cx}" y="${cy+20}" text-anchor="middle" class="m07c-hub-title"></text></g>`;
 
 Object.entries(AX).forEach(([a,[s,e]])=>{let b0=p(R.core,s),b1=p(R.axis1+26,s),c0=p(R.core,e),c1=p(R.axis1+26,e);svg+=`<g class="m07c-wedge m07c-wedge-${a}" style="--c:${FIELDS[a].color}"><path d="${ring(R.core,R.axis0,s,e)}" class="m07c-wedge-fill"/><path d="M${b0[0]} ${b0[1]}L${b1[0]} ${b1[1]}M${c0[0]} ${c0[1]}L${c1[0]} ${c1[1]}" class="m07c-wedge-edge"/></g>`});
 svg+=tips.join('');
-svg+=`<text x="${cx}" y="${cy+418}" text-anchor="middle" class="m07-circle-caption">안쪽부터 Buchanan의 네 영역 · KIDP 9개 분야 · 4대 상위 축. 네 영역은 같은 크기로 두어 위계를 뜻하지 않습니다.</text><text x="${cx}" y="${cy+434}" text-anchor="middle" class="m07-circle-caption">분야 아래 표기는 그 분야가 걸치는 축이며 앞의 것이 주로 대응시킨 축입니다. 대응과 걸침은 본 연구의 해석입니다(그림 2-2).</text></g>`;
+svg+=`<text x="${cx}" y="${cy+418}" text-anchor="middle" class="m07-circle-caption m07c-cap-1" data-default="안쪽부터 Buchanan의 네 영역 · KIDP 9개 분야 · 4대 상위 축. 네 영역은 같은 크기로 두어 위계를 뜻하지 않습니다.">안쪽부터 Buchanan의 네 영역 · KIDP 9개 분야 · 4대 상위 축. 네 영역은 같은 크기로 두어 위계를 뜻하지 않습니다.</text><text x="${cx}" y="${cy+434}" text-anchor="middle" class="m07-circle-caption m07c-cap-2" data-default="분야 아래 표기는 그 분야가 걸치는 축이며 앞의 것이 주로 대응시킨 축입니다. 대응과 걸침은 본 연구의 해석입니다(그림 2-2).">분야 아래 표기는 그 분야가 걸치는 축이며 앞의 것이 주로 대응시킨 축입니다. 대응과 걸침은 본 연구의 해석입니다(그림 2-2).</text></g>`;
 return svg}
 
 /* 이름 띠의 흐름: 위·아래 반원이 각자 문구를 흘려보낸다(위는 왼→오, 아래는 오→왼으로 한 방향 회전처럼 읽힘).
@@ -789,20 +810,65 @@ return `<section class="ex ex-final" style="--field:${FIELDS[axis].color}"><div 
 };
 document.addEventListener('click',e=>{const b=e.target.closest('[data-ex]');if(!b)return;switch(b.dataset.ex){case 'evidenceCell':modelField=b.dataset.v[0];modelStage=Number(b.dataset.v[1]);break;case 'evidenceMode':evidenceMode=b.dataset.v;break;case 'modelAll':modelField='all';modelStage=-1;break;case 'modelStage':modelStage=Number(b.dataset.v);break;case 'modelField':modelField=b.dataset.v;break;case 'axis':axis=b.dataset.v;break;case 'stage':exStep=Number(b.dataset.v);break;case 'mode':exState=b.dataset.v;break;case 'graph':exSurvey=!exSurvey;break;case 'try':exTry=!exTry;break;}render();});
 document.addEventListener('change',e=>{if(e.target.matches('[data-ex-select]')){exPair[Number(e.target.dataset.exSelect)]=e.target.value;const out=document.querySelector('#pair-result');if(out)out.innerHTML=pairResult()}});
-</script><script>document.addEventListener('click',e=>{const a=e.target.closest('[data-open-model]');if(a){modelField='all';modelStage=-1;researchPanel='sbrt';if(route==='model')render()}},true);</script><aside id="map-tip-card" role="status" hidden><b></b><p></p><small></small></aside><script>
-(()=>{const box=document.querySelector('#map-tip-card'),sel='.plate-map .m07c [data-map-field],.plate-map .m07c [data-kidp-label]';
-function hide(){box.hidden=true}
-function show(el,x,y){const a=el.dataset.mapField,d=MAP07_DOMAINS.find(d=>d.name===el.dataset.kidpLabel);if(!a&&!d)return;
-box.querySelector('b').textContent=a?(el.classList.contains('order-region')?'Buchanan · ':'Axis '+a+' · ')+FIELDS[a].ko:d.name;
-box.querySelector('p').textContent=a?FIELDS[a].focus+'?':(d.name==='융합'?'여러 분야를 통합하는 디자인. ':d.name==='디자인 일반'?'전략·정책 디자인 등을 포괄합니다. ':'')+'분류 대응 · '+(d.label||d.axes.join(' · '));
-box.querySelector('small').textContent=a?FIELDS[a].boundary:'KIDP 9개 분야 · 그림 2-2의 분류 대응';
-box.hidden=false;box.style.left=Math.max(6,Math.min(x+14,innerWidth-box.offsetWidth-8))+'px';box.style.top=Math.max(6,Math.min(y+15,innerHeight-box.offsetHeight-8))+'px'}
+</script><script>document.addEventListener('click',e=>{const a=e.target.closest('[data-open-model]');if(a){modelField='all';modelStage=-1;researchPanel='sbrt';if(route==='model')render()}},true);</script><aside id="map-tip-card" role="status" hidden><b></b><p></p><small></small></aside><script>/* 원형 지도 롤오버 설명.
+   두 방식을 비교할 수 있다: 기본은 유리 카드(커서 방향으로 원 바깥에 뜸), 주소에 ?tip=hub를 붙이면 가운데 원 설명판. */
+(()=>{
+const box=document.querySelector('#map-tip-card'),sel='.plate-map .m07c [data-map-field],.plate-map .m07c [data-kidp-label]';
+const MODE=(new URLSearchParams(location.search).get('tip')||'glass')==='hub'?'hub':'glass';
+document.documentElement.dataset.tipMode=MODE;
+const line=document.createElement('div');line.id='map-tip-line';line.hidden=true;document.body.appendChild(line);
+const BUCH={A:['SYMBOL','기호'],B:['THINGS','사물'],C:['ACTIONS','활동과 서비스'],D:['ENVIRONMENTS','시스템과 환경']};
+const BUCH_NOTE={A:'첫째 영역. 본 연구는 Axis A 기호·의미 중심에 대응시켰습니다.',B:'둘째 영역. 본 연구는 Axis B 사물·인공물 중심에 대응시켰습니다.',
+ C:'셋째 영역. 행동과 상호작용은 Axis C, 조직된 서비스는 Axis D에 대응시켰습니다.',D:'넷째 영역. 셋째 영역의 조직된 서비스와 함께 Axis D에 대응시켰습니다.'};
+const AXIS_LINE={A:'의미 전달과 해석의 관점에서 디자인 문제를 봅니다.',B:'형태와 기능, 물리적 구성의 관점에서 문제를 봅니다.',
+ C:'행동과 상호작용의 흐름을 중심으로 문제를 봅니다.',D:'관계와 운영, 복합적인 맥락에서 문제를 봅니다.'};
+const nameOf=n=>n.replace(/\s/g,'');
+function content(el){
+ const a=el.dataset.mapField,d=MAP07_DOMAINS.find(x=>x.name===el.dataset.kidpLabel);
+ if(a&&el.classList.contains('order-region'))return{kind:a,hubTag:BUCH[a][0],hubTitle:BUCH[a][1],title:BUCH[a][0]+' · '+BUCH[a][1],tag:'Buchanan(1992)',body:BUCH_NOTE[a],note:'네 영역은 같은 크기로 두어 위계를 뜻하지 않습니다 (2.2.3)'};
+ if(a)return{kind:a,hubTag:'AXIS '+a,hubTitle:FIELDS[a].ko,title:'AXIS '+a+' · '+FIELDS[a].ko,tag:'AXIS '+a,body:AXIS_LINE[a],note:'누르면 이 분야의 가이드로 이동합니다'};
+ if(!d)return null;
+ const tag=d.label||d.axes.join(' · '),kind=d.axes[0];
+ if(d.name==='융합')return{kind,title:'융합디자인',tag,body:'여러 분야를 통합하는 디자인. 네 축 모두에 걸치며 본 연구는 주로 Axis D에 대응시켰습니다.',note:'KIDP(2019) 9개 분야 · 2.2.3'};
+ if(d.name==='디자인 일반')return{kind,title:'디자인일반',tag,body:'전략·정책 디자인 등. 네 축 모두에 걸치며 본 연구는 주로 Axis D에 대응시켰습니다.',note:'KIDP(2019) 9개 분야 · 2.2.3'};
+ const main='Axis '+d.axes[0]+' '+FIELDS[d.axes[0]].ko,more=d.axes.slice(1).map(x=>'Axis '+x).join(', ');
+ return{kind,title:nameOf(d.name),tag,body:'주로 '+main+'에 대응'+(more?', '+more+(d.label&&d.label.includes('일부')?'에 일부 걸칩니다.':'에도 걸칩니다.'):'시켰습니다.'),note:'KIDP(2019) 9개 분야 · 그림 2-2'};
+}
+/* 원의 중심과 바깥 반지름(화면 좌표): 네 축 색 띠를 합친 상자 */
+function circleOf(el){const g=el.closest('.m07c');if(!g)return null;let L=1e9,T=1e9,R=-1e9,B=-1e9;
+ g.querySelectorAll('.m07c-axis-arc').forEach(p=>{const r=p.getBoundingClientRect();L=Math.min(L,r.left);T=Math.min(T,r.top);R=Math.max(R,r.right);B=Math.max(B,r.bottom)});
+ if(R<L)return null;return{x:(L+R)/2,y:(T+B)/2,r:Math.max(R-L,B-T)/2,g}}
+/* 유리 카드: 커서가 있는 방향으로, 원 바깥 사분면에 놓는다(모서리가 원 밖이면 상자 전체가 원 밖) */
+let lastKey='';
+function showGlass(el,x,y){const c=content(el);if(!c)return;const C=circleOf(el);
+ const key=c.title;if(key!==lastKey){box.querySelector('b').textContent=c.title;box.querySelector('p').textContent=c.body;box.querySelector('small').textContent=c.note;box.style.setProperty('--tone',FIELDS[c.kind]?.color||'var(--ink)');lastKey=key;box.classList.remove('in');void box.offsetWidth}
+ box.hidden=false;const w=box.offsetWidth,h=box.offsetHeight;let left=x+14,top=y+15,ax=x,ay=y;
+ if(C){let dx=x-C.x,dy=y-C.y,len=Math.hypot(dx,dy)||1;dx/=len;dy/=len;const gap=14;ax=C.x+dx*(C.r+gap);ay=C.y+dy*(C.r+gap);
+  left=dx>=0?ax:ax-w;top=dy>=0?ay:ay-h}
+ left=Math.max(8,Math.min(left,innerWidth-w-8));top=Math.max(8,Math.min(top,innerHeight-h-8));
+ box.style.left=left+'px';box.style.top=top+'px';box.classList.add('in');
+ if(C){const L=Math.hypot(ax-x,ay-y);line.hidden=false;line.style.left=x+'px';line.style.top=y+'px';line.style.width=L+'px';line.style.transform='rotate('+Math.atan2(ay-y,ax-x)+'rad)'}}
+/* 가운데 설명판: 원 안에는 이름과 축 표기만, 긴 문장은 원 아래 캡션 자리 */
+let hubOn=null;
+function showHub(el){const c=content(el);if(!c)return;const C=circleOf(el);if(!C)return;const g=C.g;
+ if(hubOn&&hubOn!==g)clearHub();hubOn=g;g.classList.add('hub-on');
+ const t=g.querySelector('.m07c-hub-title'),s=g.querySelector('.m07c-hub-tag');
+ t.textContent=c.hubTitle||c.title;t.style.fontSize='';s.textContent=c.hubTag||c.tag;
+ try{const max=118,len=t.getComputedTextLength();if(len>max)t.style.fontSize=(17*max/len).toFixed(1)+'px'}catch(e){}
+ g.querySelector('.m07c-cap-1').textContent=c.body;g.querySelector('.m07c-cap-2').textContent=c.note;
+ g.style.setProperty('--hub-tone',FIELDS[c.kind]?.color||'var(--ink)')}
+function clearHub(){if(!hubOn)return;const g=hubOn;g.classList.remove('hub-on');
+ const c1=g.querySelector('.m07c-cap-1'),c2=g.querySelector('.m07c-cap-2');c1.textContent=c1.dataset.default;c2.textContent=c2.dataset.default;hubOn=null}
+function hide(){box.hidden=true;box.classList.remove('in');line.hidden=true;lastKey='';clearHub()}
+function show(el,x,y){if(MODE==='hub')showHub(el);else showGlass(el,x,y)}
 const target=e=>e.target.closest?.(sel);
 document.addEventListener('pointermove',e=>{if(e.pointerType==='touch')return;const el=target(e);if(el)show(el,e.clientX,e.clientY);else hide()});
 document.addEventListener('pointerdown',e=>{const el=target(e);if(el)show(el,e.clientX,e.clientY);else hide()});
-document.addEventListener('focusin',e=>{const el=target(e);if(!el){hide();return}let r=el.getBoundingClientRect();show(el,r.left+r.width/2,r.top+r.height/2)});
+document.addEventListener('focusin',e=>{const el=target(e);if(!el){hide();return}const r=el.getBoundingClientRect();show(el,r.left+r.width/2,r.top+r.height/2)});
 document.addEventListener('keydown',e=>{if(e.key==='Escape')hide()});
-window.addEventListener('scroll',hide,true);window.addEventListener('hashchange',hide);})();</script><dialog id="sitemap-panel" aria-labelledby="sitemap-title"><div class="sm-head"><h2 id="sitemap-title">Site map · 사이트맵</h2><form method="dialog"><button aria-label="사이트맵 닫기">닫기 ×</button></form></div><nav aria-label="전체 화면"></nav></dialog><script>
+window.addEventListener('scroll',hide,true);window.addEventListener('hashchange',hide);
+})();
+</script><dialog id="sitemap-panel" aria-labelledby="sitemap-title"><div class="sm-head"><h2 id="sitemap-title">Site map · 사이트맵</h2><form method="dialog"><button aria-label="사이트맵 닫기">닫기 ×</button></form></div><nav aria-label="전체 화면"></nav></dialog><script>
 (()=>{const dlg=document.querySelector('#sitemap-panel'), trigger=document.querySelector('#sitemap-open'),sections=[
 ['Atlas','atlas','전체 지도'],['SBRT','model','단계별 역할 전환 모델','sbrt'],['Guide','fields','협업 가이드'],['Log','record','내 협업 기록']];
 trigger.onclick=()=>{const current=['define','ideate','evaluate','deliver'].includes(route)?'fields':route;
