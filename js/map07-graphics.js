@@ -67,11 +67,11 @@ quadrants.forEach(([a,s,e,pattern,label,ko])=>{let [x,y]=p(131,(s+e)/2);svg+=`<g
 svg+=`<path d="M${cx-R.quad} ${cy}H${cx-R.core} M${cx+R.core} ${cy}H${cx+R.quad} M${cx} ${cy-R.quad}V${cy-R.core} M${cx} ${cy+R.core}V${cy+R.quad}" class="m07-ring-spoke"/>`;
 
 /* 가운데 */
-svg+=`<circle cx="${cx}" cy="${cy}" r="${R.core}" class="m07-hub-fill"/><g class="m07c-hub-default"><text x="${cx}" y="${cy-10}" text-anchor="middle" class="m07c-problem">DESIGN</text><text x="${cx}" y="${cy+14}" text-anchor="middle" class="m07c-problem">PROBLEM</text><text x="${cx}" y="${cy+36}" text-anchor="middle" class="m07c-problem-ko">디자인 문제</text></g><g class="m07c-hub-read"><text x="${cx}" y="${cy-4}" text-anchor="middle" class="m07c-hub-tag"></text><text x="${cx}" y="${cy+20}" text-anchor="middle" class="m07c-hub-title"></text></g>`;
+svg+=`<circle cx="${cx}" cy="${cy}" r="${R.core}" class="m07-hub-fill"/><text x="${cx}" y="${cy-10}" text-anchor="middle" class="m07c-problem">DESIGN</text><text x="${cx}" y="${cy+14}" text-anchor="middle" class="m07c-problem">PROBLEM</text><text x="${cx}" y="${cy+36}" text-anchor="middle" class="m07c-problem-ko">디자인 문제</text>`;
 
 Object.entries(AX).forEach(([a,[s,e]])=>{let b0=p(R.core,s),b1=p(R.axis1+26,s),c0=p(R.core,e),c1=p(R.axis1+26,e);svg+=`<g class="m07c-wedge m07c-wedge-${a}" style="--c:${FIELDS[a].color}"><path d="${ring(R.core,R.axis0,s,e)}" class="m07c-wedge-fill"/><path d="M${b0[0]} ${b0[1]}L${b1[0]} ${b1[1]}M${c0[0]} ${c0[1]}L${c1[0]} ${c1[1]}" class="m07c-wedge-edge"/></g>`});
 svg+=tips.join('');
-svg+=`<text x="${cx}" y="${cy+418}" text-anchor="middle" class="m07-circle-caption m07c-cap-1" data-default="안쪽부터 Buchanan의 네 영역 · KIDP 9개 분야 · 4대 상위 축. 네 영역은 같은 크기로 두어 위계를 뜻하지 않습니다.">안쪽부터 Buchanan의 네 영역 · KIDP 9개 분야 · 4대 상위 축. 네 영역은 같은 크기로 두어 위계를 뜻하지 않습니다.</text><text x="${cx}" y="${cy+434}" text-anchor="middle" class="m07-circle-caption m07c-cap-2" data-default="분야 아래 표기는 그 분야가 걸치는 축이며 앞의 것이 주로 대응시킨 축입니다. 대응과 걸침은 본 연구의 해석입니다(그림 2-2).">분야 아래 표기는 그 분야가 걸치는 축이며 앞의 것이 주로 대응시킨 축입니다. 대응과 걸침은 본 연구의 해석입니다(그림 2-2).</text></g>`;
+svg+=`<text x="${cx}" y="${cy+418}" text-anchor="middle" class="m07-circle-caption">안쪽부터 Buchanan의 네 영역 · KIDP 9개 분야 · 4대 상위 축. 네 영역은 같은 크기로 두어 위계를 뜻하지 않습니다.</text><text x="${cx}" y="${cy+434}" text-anchor="middle" class="m07-circle-caption">분야 아래 표기는 그 분야가 걸치는 축이며 앞의 것이 주로 대응시킨 축입니다. 대응과 걸침은 본 연구의 해석입니다(그림 2-2).</text></g>`;
 return svg}
 
 /* 이름 띠의 흐름: 위·아래 반원이 각자 문구를 흘려보낸다(위는 왼→오, 아래는 오→왼으로 한 방향 회전처럼 읽힘).

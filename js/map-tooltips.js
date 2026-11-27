@@ -1,9 +1,6 @@
-/* 원형 지도 롤오버 설명.
-   두 방식을 비교할 수 있다: 기본은 유리 카드(커서 방향으로 원 바깥에 뜸), 주소에 ?tip=hub를 붙이면 가운데 원 설명판. */
+/* 원형 지도 롤오버 설명: 유리 카드가 커서 방향으로 원 바깥에 떠서 원을 가리지 않는다(11/28 저자 선택). */
 (()=>{
 const box=document.querySelector('#map-tip-card'),sel='.plate-map .m07c [data-map-field],.plate-map .m07c [data-kidp-label]';
-const MODE=(new URLSearchParams(location.search).get('tip')||'glass')==='hub'?'hub':'glass';
-document.documentElement.dataset.tipMode=MODE;
 const line=document.createElement('div');line.id='map-tip-line';line.hidden=true;document.body.appendChild(line);
 const BUCH={A:['SYMBOL','기호'],B:['THINGS','사물'],C:['ACTIONS','활동과 서비스'],D:['ENVIRONMENTS','시스템과 환경']};
 const BUCH_NOTE={A:'첫째 영역. 본 연구는 Axis A 기호·의미 중심에 대응시켰습니다.',B:'둘째 영역. 본 연구는 Axis B 사물·인공물 중심에 대응시켰습니다.',
@@ -13,8 +10,8 @@ const AXIS_LINE={A:'의미 전달과 해석의 관점에서 디자인 문제를 
 const nameOf=n=>n.replace(/\s/g,'');
 function content(el){
  const a=el.dataset.mapField,d=MAP07_DOMAINS.find(x=>x.name===el.dataset.kidpLabel);
- if(a&&el.classList.contains('order-region'))return{kind:a,hubTag:BUCH[a][0],hubTitle:BUCH[a][1],title:BUCH[a][0]+' · '+BUCH[a][1],tag:'Buchanan(1992)',body:BUCH_NOTE[a],note:'네 영역은 같은 크기로 두어 위계를 뜻하지 않습니다 (2.2.3)'};
- if(a)return{kind:a,hubTag:'AXIS '+a,hubTitle:FIELDS[a].ko,title:'AXIS '+a+' · '+FIELDS[a].ko,tag:'AXIS '+a,body:AXIS_LINE[a],note:'누르면 이 분야의 가이드로 이동합니다'};
+ if(a&&el.classList.contains('order-region'))return{kind:a,title:BUCH[a][0]+' · '+BUCH[a][1],tag:'Buchanan(1992)',body:BUCH_NOTE[a],note:'네 영역은 같은 크기로 두어 위계를 뜻하지 않습니다 (2.2.3)'};
+ if(a)return{kind:a,title:'AXIS '+a+' · '+FIELDS[a].ko,tag:'AXIS '+a,body:AXIS_LINE[a],note:'누르면 이 분야의 가이드로 이동합니다'};
  if(!d)return null;
  const tag=d.label||d.axes.join(' · '),kind=d.axes[0];
  if(d.name==='융합')return{kind,title:'융합디자인',tag,body:'여러 분야를 통합하는 디자인. 네 축 모두에 걸치며 본 연구는 주로 Axis D에 대응시켰습니다.',note:'KIDP(2019) 9개 분야 · 2.2.3'};
@@ -36,19 +33,8 @@ function showGlass(el,x,y){const c=content(el);if(!c)return;const C=circleOf(el)
  left=Math.max(8,Math.min(left,innerWidth-w-8));top=Math.max(8,Math.min(top,innerHeight-h-8));
  box.style.left=left+'px';box.style.top=top+'px';box.classList.add('in');
  if(C){const L=Math.hypot(ax-x,ay-y);line.hidden=false;line.style.left=x+'px';line.style.top=y+'px';line.style.width=L+'px';line.style.transform='rotate('+Math.atan2(ay-y,ax-x)+'rad)'}}
-/* 가운데 설명판: 원 안에는 이름과 축 표기만, 긴 문장은 원 아래 캡션 자리 */
-let hubOn=null;
-function showHub(el){const c=content(el);if(!c)return;const C=circleOf(el);if(!C)return;const g=C.g;
- if(hubOn&&hubOn!==g)clearHub();hubOn=g;g.classList.add('hub-on');
- const t=g.querySelector('.m07c-hub-title'),s=g.querySelector('.m07c-hub-tag');
- t.textContent=c.hubTitle||c.title;t.style.fontSize='';s.textContent=c.hubTag||c.tag;
- try{const max=118,len=t.getComputedTextLength();if(len>max)t.style.fontSize=(17*max/len).toFixed(1)+'px'}catch(e){}
- g.querySelector('.m07c-cap-1').textContent=c.body;g.querySelector('.m07c-cap-2').textContent=c.note;
- g.style.setProperty('--hub-tone',FIELDS[c.kind]?.color||'var(--ink)')}
-function clearHub(){if(!hubOn)return;const g=hubOn;g.classList.remove('hub-on');
- const c1=g.querySelector('.m07c-cap-1'),c2=g.querySelector('.m07c-cap-2');c1.textContent=c1.dataset.default;c2.textContent=c2.dataset.default;hubOn=null}
-function hide(){box.hidden=true;box.classList.remove('in');line.hidden=true;lastKey='';clearHub()}
-function show(el,x,y){if(MODE==='hub')showHub(el);else showGlass(el,x,y)}
+function hide(){box.hidden=true;box.classList.remove('in');line.hidden=true;lastKey=''}
+function show(el,x,y){showGlass(el,x,y)}
 const target=e=>e.target.closest?.(sel);
 document.addEventListener('pointermove',e=>{if(e.pointerType==='touch')return;const el=target(e);if(el)show(el,e.clientX,e.clientY);else hide()});
 document.addEventListener('pointerdown',e=>{const el=target(e);if(el)show(el,e.clientX,e.clientY);else hide()});

@@ -477,16 +477,6 @@ aside #app-modes a.active :is(b,small,span),aside #app-modes a[aria-current=page
 #map-tip-line{position:fixed;z-index:9999;height:0;border-top:1.2px dashed color-mix(in srgb,var(--ink) 70%,transparent);transform-origin:0 0;pointer-events:none}
 #map-tip-line[hidden]{display:none}
 @media(prefers-reduced-motion:reduce){#map-tip-card{transition:none}}
-/* 가운데 설명판(?tip=hub) */
-html[data-tip-mode=hub] #map-tip-card,html[data-tip-mode=hub] #map-tip-line{display:none!important}
-.m07c-hub-default,.m07c-hub-read{transition:opacity .2s ease}
-.m07c-hub-read{opacity:0;pointer-events:none}
-.m07c.hub-on .m07c-hub-default{opacity:0}
-.m07c.hub-on .m07c-hub-read{opacity:1}
-.m07c-hub-title{font-size:17px;font-weight:800;letter-spacing:-.3px;fill:var(--paper)}
-.m07c-hub-tag{font-size:10.5px;font-weight:700;letter-spacing:.6px;fill:var(--hub-tone,var(--paper));filter:brightness(1.35)}
-.m07c.hub-on .m07c-cap-1{fill:var(--ink);font-size:12px;font-weight:600}
-.m07c-cap-1,.m07c-cap-2{transition:fill .2s ease}
 </style></head><body><header><a href="#atlas" class="brand" aria-label="CollaboAtlas 전체 지도"><img class="custom-logo logo-light" src="assets/wordmark/CollaboAtlas_custom_header_light.svg" alt="CollaboAtlas — DESIGNER × AI"><img class="custom-logo logo-dark" src="assets/wordmark/CollaboAtlas_custom_header_dark.svg" alt="CollaboAtlas — DESIGNER × AI"></a><span class="header-context">ANATOMY OF<br>DESIGN COLLABORATION</span><div class="field-switch"><small>REFERENCE DOMAIN / 참고 분야</small><div id="field-switch"></div></div><button id="sitemap-open" type="button" aria-haspopup="dialog" aria-controls="sitemap-panel">사이트맵</button><button id="theme-toggle" type="button" aria-label="다크 모드로 전환" aria-pressed="false">◐ Dark / 다크</button></header><div class="app-shell"><aside><nav id="app-modes" aria-label="두 핵심 기능"></nav><div class="index-caption">INDEX / READ · EXPLORE · RECORD</div><nav id="navigation"></nav><div class="sidebar-note"><i></i>관계는 고정되지 않는다.<br>역할과 판단을 함께 읽는다.<small>SURVEY n=43 / INTERVIEWS n=12</small></div></aside><main id="main" tabindex="-1"><p class="loading">Loading the atlas / 연구 지도를 불러오는 중입니다.</p></main></div><footer><span>SBRT / RESEARCH → PRACTICE</span><span>DATA · CONCEPT · RECORD</span><span>LOCAL-FIRST / ON THIS DEVICE</span></footer><div id="toast" role="status" aria-live="polite"></div><dialog id="confirm-dialog" aria-labelledby="confirm-title"><h2 id="confirm-title"></h2><p id="confirm-body"></p><div class="button-row"><button id="confirm-cancel">Cancel / 취소</button><button id="confirm-apply" class="danger">확인한 범위 삭제</button></div></dialog><section id="report" hidden></section><input id="backup-input" type="file" accept="application/json,.json" hidden><script>const AI=['Ge','As','Ad','Co'], HUMAN=['E','I','O','V'];
 const ROLES={Ge:{en:'Generator',ko:'생성자',action:'요청을 여러 대안으로 펼칩니다.',file:'04_AI_role_diagrams/Generator.svg'},As:{en:'Assistant',ko:'보조자',action:'사람이 정한 작업 범위를 수행합니다.',file:'04_AI_role_diagrams/Assistant.svg'},Ad:{en:'Advisor',ko:'조언자',action:'기존 안을 검토하고 피드백을 제공합니다.',file:'04_AI_role_diagrams/Advisor.svg'},Co:{en:'Co-creator',ko:'공동 창작자',action:'공유한 작업 대상을 대화하며 발전시킵니다.',file:'04_AI_role_diagrams/Co_creator.svg'},E:{en:'Evaluator',ko:'평가자',action:'기준에 비추어 선택하거나 제외합니다.',file:'05_designer_role_diagrams/Evaluator.svg'},I:{en:'Interpreter',ko:'해석자',action:'맥락에 비추어 의미를 해석하고 재구성합니다.',file:'05_designer_role_diagrams/Interpreter.svg'},O:{en:'Orchestrator',ko:'조율자',action:'도구·작업·자원과 순서를 조율합니다.',file:'05_designer_role_diagrams/Orchestrator.svg'},V:{en:'Value-creator',ko:'가치 창출자',action:'목적과 가치를 정의하고 판단에 반영합니다.' ,file:'05_designer_role_diagrams/Value_creator.svg'}};
 const FIELDS={A:{en:'Symbols & Meaning',ko:'기호·의미 중심',includes:'시각·정보·브랜딩·디지털미디어',color:'#E94B29',file:'01_fields/A_field.svg',focus:'기호가 맥락 속에서 어떤 의미로 읽히는가',boundary:'메시지의 해석과 의미 전달을 중심으로 살펴봅니다.'},B:{en:'Things & Artifacts',ko:'사물·인공물 중심',includes:'제품·패션·텍스타일·산업공예',color:'#286B9A',file:'01_fields/B_field.svg',focus:'형태·재료·제작 조건이 사용 경험을 어떻게 만드는가',boundary:'물리적 형태와 물성, 제작 가능성을 함께 살펴봅니다.'},C:{en:'Actions & Interaction',ko:'행동·인터랙션 중심',includes:'UI/UX·인터랙션',color:'#34735C',file:'01_fields/C_field.svg',focus:'사람의 행동과 환경의 응답은 어떻게 이어지는가',boundary:'사용자 행동과 인터페이스·환경의 접점을 살펴봅니다.'},D:{en:'Systems & Services',ko:'시스템·서비스 중심',includes:'서비스·경험·융합·전략',color:'#77568D',file:'01_fields/D_field.svg',focus:'이해관계자·자원·운영이 어떤 관계로 연결되는가',boundary:'관계와 운영 구조, 서비스의 전체 작동을 살펴봅니다.'}};
@@ -602,11 +592,11 @@ quadrants.forEach(([a,s,e,pattern,label,ko])=>{let [x,y]=p(131,(s+e)/2);svg+=`<g
 svg+=`<path d="M${cx-R.quad} ${cy}H${cx-R.core} M${cx+R.core} ${cy}H${cx+R.quad} M${cx} ${cy-R.quad}V${cy-R.core} M${cx} ${cy+R.core}V${cy+R.quad}" class="m07-ring-spoke"/>`;
 
 /* 가운데 */
-svg+=`<circle cx="${cx}" cy="${cy}" r="${R.core}" class="m07-hub-fill"/><g class="m07c-hub-default"><text x="${cx}" y="${cy-10}" text-anchor="middle" class="m07c-problem">DESIGN</text><text x="${cx}" y="${cy+14}" text-anchor="middle" class="m07c-problem">PROBLEM</text><text x="${cx}" y="${cy+36}" text-anchor="middle" class="m07c-problem-ko">디자인 문제</text></g><g class="m07c-hub-read"><text x="${cx}" y="${cy-4}" text-anchor="middle" class="m07c-hub-tag"></text><text x="${cx}" y="${cy+20}" text-anchor="middle" class="m07c-hub-title"></text></g>`;
+svg+=`<circle cx="${cx}" cy="${cy}" r="${R.core}" class="m07-hub-fill"/><text x="${cx}" y="${cy-10}" text-anchor="middle" class="m07c-problem">DESIGN</text><text x="${cx}" y="${cy+14}" text-anchor="middle" class="m07c-problem">PROBLEM</text><text x="${cx}" y="${cy+36}" text-anchor="middle" class="m07c-problem-ko">디자인 문제</text>`;
 
 Object.entries(AX).forEach(([a,[s,e]])=>{let b0=p(R.core,s),b1=p(R.axis1+26,s),c0=p(R.core,e),c1=p(R.axis1+26,e);svg+=`<g class="m07c-wedge m07c-wedge-${a}" style="--c:${FIELDS[a].color}"><path d="${ring(R.core,R.axis0,s,e)}" class="m07c-wedge-fill"/><path d="M${b0[0]} ${b0[1]}L${b1[0]} ${b1[1]}M${c0[0]} ${c0[1]}L${c1[0]} ${c1[1]}" class="m07c-wedge-edge"/></g>`});
 svg+=tips.join('');
-svg+=`<text x="${cx}" y="${cy+418}" text-anchor="middle" class="m07-circle-caption m07c-cap-1" data-default="안쪽부터 Buchanan의 네 영역 · KIDP 9개 분야 · 4대 상위 축. 네 영역은 같은 크기로 두어 위계를 뜻하지 않습니다.">안쪽부터 Buchanan의 네 영역 · KIDP 9개 분야 · 4대 상위 축. 네 영역은 같은 크기로 두어 위계를 뜻하지 않습니다.</text><text x="${cx}" y="${cy+434}" text-anchor="middle" class="m07-circle-caption m07c-cap-2" data-default="분야 아래 표기는 그 분야가 걸치는 축이며 앞의 것이 주로 대응시킨 축입니다. 대응과 걸침은 본 연구의 해석입니다(그림 2-2).">분야 아래 표기는 그 분야가 걸치는 축이며 앞의 것이 주로 대응시킨 축입니다. 대응과 걸침은 본 연구의 해석입니다(그림 2-2).</text></g>`;
+svg+=`<text x="${cx}" y="${cy+418}" text-anchor="middle" class="m07-circle-caption">안쪽부터 Buchanan의 네 영역 · KIDP 9개 분야 · 4대 상위 축. 네 영역은 같은 크기로 두어 위계를 뜻하지 않습니다.</text><text x="${cx}" y="${cy+434}" text-anchor="middle" class="m07-circle-caption">분야 아래 표기는 그 분야가 걸치는 축이며 앞의 것이 주로 대응시킨 축입니다. 대응과 걸침은 본 연구의 해석입니다(그림 2-2).</text></g>`;
 return svg}
 
 /* 이름 띠의 흐름: 위·아래 반원이 각자 문구를 흘려보낸다(위는 왼→오, 아래는 오→왼으로 한 방향 회전처럼 읽힘).
@@ -810,12 +800,9 @@ return `<section class="ex ex-final" style="--field:${FIELDS[axis].color}"><div 
 };
 document.addEventListener('click',e=>{const b=e.target.closest('[data-ex]');if(!b)return;switch(b.dataset.ex){case 'evidenceCell':modelField=b.dataset.v[0];modelStage=Number(b.dataset.v[1]);break;case 'evidenceMode':evidenceMode=b.dataset.v;break;case 'modelAll':modelField='all';modelStage=-1;break;case 'modelStage':modelStage=Number(b.dataset.v);break;case 'modelField':modelField=b.dataset.v;break;case 'axis':axis=b.dataset.v;break;case 'stage':exStep=Number(b.dataset.v);break;case 'mode':exState=b.dataset.v;break;case 'graph':exSurvey=!exSurvey;break;case 'try':exTry=!exTry;break;}render();});
 document.addEventListener('change',e=>{if(e.target.matches('[data-ex-select]')){exPair[Number(e.target.dataset.exSelect)]=e.target.value;const out=document.querySelector('#pair-result');if(out)out.innerHTML=pairResult()}});
-</script><script>document.addEventListener('click',e=>{const a=e.target.closest('[data-open-model]');if(a){modelField='all';modelStage=-1;researchPanel='sbrt';if(route==='model')render()}},true);</script><aside id="map-tip-card" role="status" hidden><b></b><p></p><small></small></aside><script>/* 원형 지도 롤오버 설명.
-   두 방식을 비교할 수 있다: 기본은 유리 카드(커서 방향으로 원 바깥에 뜸), 주소에 ?tip=hub를 붙이면 가운데 원 설명판. */
+</script><script>document.addEventListener('click',e=>{const a=e.target.closest('[data-open-model]');if(a){modelField='all';modelStage=-1;researchPanel='sbrt';if(route==='model')render()}},true);</script><aside id="map-tip-card" role="status" hidden><b></b><p></p><small></small></aside><script>/* 원형 지도 롤오버 설명: 유리 카드가 커서 방향으로 원 바깥에 떠서 원을 가리지 않는다(11/28 저자 선택). */
 (()=>{
 const box=document.querySelector('#map-tip-card'),sel='.plate-map .m07c [data-map-field],.plate-map .m07c [data-kidp-label]';
-const MODE=(new URLSearchParams(location.search).get('tip')||'glass')==='hub'?'hub':'glass';
-document.documentElement.dataset.tipMode=MODE;
 const line=document.createElement('div');line.id='map-tip-line';line.hidden=true;document.body.appendChild(line);
 const BUCH={A:['SYMBOL','기호'],B:['THINGS','사물'],C:['ACTIONS','활동과 서비스'],D:['ENVIRONMENTS','시스템과 환경']};
 const BUCH_NOTE={A:'첫째 영역. 본 연구는 Axis A 기호·의미 중심에 대응시켰습니다.',B:'둘째 영역. 본 연구는 Axis B 사물·인공물 중심에 대응시켰습니다.',
@@ -825,8 +812,8 @@ const AXIS_LINE={A:'의미 전달과 해석의 관점에서 디자인 문제를 
 const nameOf=n=>n.replace(/\s/g,'');
 function content(el){
  const a=el.dataset.mapField,d=MAP07_DOMAINS.find(x=>x.name===el.dataset.kidpLabel);
- if(a&&el.classList.contains('order-region'))return{kind:a,hubTag:BUCH[a][0],hubTitle:BUCH[a][1],title:BUCH[a][0]+' · '+BUCH[a][1],tag:'Buchanan(1992)',body:BUCH_NOTE[a],note:'네 영역은 같은 크기로 두어 위계를 뜻하지 않습니다 (2.2.3)'};
- if(a)return{kind:a,hubTag:'AXIS '+a,hubTitle:FIELDS[a].ko,title:'AXIS '+a+' · '+FIELDS[a].ko,tag:'AXIS '+a,body:AXIS_LINE[a],note:'누르면 이 분야의 가이드로 이동합니다'};
+ if(a&&el.classList.contains('order-region'))return{kind:a,title:BUCH[a][0]+' · '+BUCH[a][1],tag:'Buchanan(1992)',body:BUCH_NOTE[a],note:'네 영역은 같은 크기로 두어 위계를 뜻하지 않습니다 (2.2.3)'};
+ if(a)return{kind:a,title:'AXIS '+a+' · '+FIELDS[a].ko,tag:'AXIS '+a,body:AXIS_LINE[a],note:'누르면 이 분야의 가이드로 이동합니다'};
  if(!d)return null;
  const tag=d.label||d.axes.join(' · '),kind=d.axes[0];
  if(d.name==='융합')return{kind,title:'융합디자인',tag,body:'여러 분야를 통합하는 디자인. 네 축 모두에 걸치며 본 연구는 주로 Axis D에 대응시켰습니다.',note:'KIDP(2019) 9개 분야 · 2.2.3'};
@@ -848,19 +835,8 @@ function showGlass(el,x,y){const c=content(el);if(!c)return;const C=circleOf(el)
  left=Math.max(8,Math.min(left,innerWidth-w-8));top=Math.max(8,Math.min(top,innerHeight-h-8));
  box.style.left=left+'px';box.style.top=top+'px';box.classList.add('in');
  if(C){const L=Math.hypot(ax-x,ay-y);line.hidden=false;line.style.left=x+'px';line.style.top=y+'px';line.style.width=L+'px';line.style.transform='rotate('+Math.atan2(ay-y,ax-x)+'rad)'}}
-/* 가운데 설명판: 원 안에는 이름과 축 표기만, 긴 문장은 원 아래 캡션 자리 */
-let hubOn=null;
-function showHub(el){const c=content(el);if(!c)return;const C=circleOf(el);if(!C)return;const g=C.g;
- if(hubOn&&hubOn!==g)clearHub();hubOn=g;g.classList.add('hub-on');
- const t=g.querySelector('.m07c-hub-title'),s=g.querySelector('.m07c-hub-tag');
- t.textContent=c.hubTitle||c.title;t.style.fontSize='';s.textContent=c.hubTag||c.tag;
- try{const max=118,len=t.getComputedTextLength();if(len>max)t.style.fontSize=(17*max/len).toFixed(1)+'px'}catch(e){}
- g.querySelector('.m07c-cap-1').textContent=c.body;g.querySelector('.m07c-cap-2').textContent=c.note;
- g.style.setProperty('--hub-tone',FIELDS[c.kind]?.color||'var(--ink)')}
-function clearHub(){if(!hubOn)return;const g=hubOn;g.classList.remove('hub-on');
- const c1=g.querySelector('.m07c-cap-1'),c2=g.querySelector('.m07c-cap-2');c1.textContent=c1.dataset.default;c2.textContent=c2.dataset.default;hubOn=null}
-function hide(){box.hidden=true;box.classList.remove('in');line.hidden=true;lastKey='';clearHub()}
-function show(el,x,y){if(MODE==='hub')showHub(el);else showGlass(el,x,y)}
+function hide(){box.hidden=true;box.classList.remove('in');line.hidden=true;lastKey=''}
+function show(el,x,y){showGlass(el,x,y)}
 const target=e=>e.target.closest?.(sel);
 document.addEventListener('pointermove',e=>{if(e.pointerType==='touch')return;const el=target(e);if(el)show(el,e.clientX,e.clientY);else hide()});
 document.addEventListener('pointerdown',e=>{const el=target(e);if(el)show(el,e.clientX,e.clientY);else hide()});

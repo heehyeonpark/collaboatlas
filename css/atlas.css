@@ -476,13 +476,3 @@ aside #app-modes a.active :is(b,small,span),aside #app-modes a[aria-current=page
 #map-tip-line{position:fixed;z-index:9999;height:0;border-top:1.2px dashed color-mix(in srgb,var(--ink) 70%,transparent);transform-origin:0 0;pointer-events:none}
 #map-tip-line[hidden]{display:none}
 @media(prefers-reduced-motion:reduce){#map-tip-card{transition:none}}
-/* 가운데 설명판(?tip=hub) */
-html[data-tip-mode=hub] #map-tip-card,html[data-tip-mode=hub] #map-tip-line{display:none!important}
-.m07c-hub-default,.m07c-hub-read{transition:opacity .2s ease}
-.m07c-hub-read{opacity:0;pointer-events:none}
-.m07c.hub-on .m07c-hub-default{opacity:0}
-.m07c.hub-on .m07c-hub-read{opacity:1}
-.m07c-hub-title{font-size:17px;font-weight:800;letter-spacing:-.3px;fill:var(--paper)}
-.m07c-hub-tag{font-size:10.5px;font-weight:700;letter-spacing:.6px;fill:var(--hub-tone,var(--paper));filter:brightness(1.35)}
-.m07c.hub-on .m07c-cap-1{fill:var(--ink);font-size:12px;font-weight:600}
-.m07c-cap-1,.m07c-cap-2{transition:fill .2s ease}
