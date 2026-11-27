@@ -9,6 +9,7 @@ ROOT = Path(__file__).resolve().parent
 page = (ROOT / 'index.html').read_text(encoding='utf-8')
 files = [p for folder in ('assets', 'downloads') for p in (ROOT / folder).rglob('*') if p.is_file()]
 files.append(ROOT / 'map07-evidence.json')
+files.append(ROOT / 'chips.json')
 assets = {}
 for path in sorted(files):
     mime = mimetypes.guess_type(path.name)[0] or 'application/octet-stream'
