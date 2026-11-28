@@ -1,32 +1,24 @@
-# Collaboration Atlas
+# CollaboAtlas
 
-두 핵심 기능(Guide 협업 가이드, Log 협업 로그)을 중심으로 구성한 정적 웹앱입니다. 첫 화면은 전체 지도이며 연구 개요는 Background와 SBRT Model로 분리합니다. 기존 A/B 시안과 변경 전 v03 소스는 보존합니다.
+디자이너와 AI의 역할 지도. 박사학위 논문의 단계적 역할 전환(Stage-Based Role Transition, SBRT) 모델을 보여 주는 정적 웹 애플리케이션이다. 빌드 도구나 패키지 설치 없이 동작한다.
 
 ## 실행
 
-    python3 -m http.server 8000 --directory dist
+    python3 -m http.server 8000
+    # http://localhost:8000/index.html
 
-브라우저에서 http://localhost:8000 을 여세요. 파일을 더블클릭하면 JSON fetch와 서비스 워커가 동작하지 않을 수 있습니다.
+전시용 단일 파일은 `CollaboAtlas-Exhibition.html`이다. 인터넷 없이 Chrome에서 바로 열 수 있다.
 
 ## 구성
-- data.js / chips.json: 기존 연구 정의와 변경하지 않은 인터뷰 응답 좌표
-- map07-data.js / map07-evidence.json: 도식 07의 명칭·검토안·표기 평균과 원문 라벨 출처
-- map07-graphics.js / map07-ui.js: 새 중앙 원형 지도와 근거·가이드 연결
-- graphics.js: 실제·이상 고밀도 지도, 행렬, 차이 비교
-- app.js: 연구 설명·역할 안내·프로젝트·반복 기록·보고서
-- storage.js: IndexedDB 저장과 JSON 백업 검증
-- assets/: 제공된 편집용 SVG와 원본 도판
-- downloads/: 첨부 설계 문서, 편집 자산 묶음
 
-## 데이터와 기록
-관찰(DATA), 설명(CONCEPT), 실제 작업(RECORD)을 구분합니다. 역할 좌표 위치는 범주이며 중요도나 자율성 수치가 아닙니다. 공유 경로 띠는 실제 동일 출발·도착 역할 쌍 수에 비례합니다.
+- `index.html`, `css/atlas.css`, `js/`: 편집용 소스. 같은 함수를 뒤의 스크립트가 덮어쓰는 구조이므로 index.html의 스크립트 순서를 지킨다.
+- `js/exhibition.js`: Atlas·SBRT 화면, 그림 6-1 곡선(exSeries), 인터뷰 표
+- `js/map07-graphics.js`: 중앙 원형 분류 지도(Buchanan · KIDP · Axis)
+- `js/data.js`, `js/map07-data.js`, `chips.json`, `map07-evidence.json`: 정의와 자료
+- `assets/`, `downloads/`: 도판과 내려받기 자료
+- `build.py`: 소스를 고친 뒤 `python3 build.py`로 단일 전시 파일을 다시 만든다.
+- `CLAUDE.md`: 작업 인계 메모
 
-프로젝트와 이미지 기록은 이 앱 주소의 브라우저 IndexedDB에 저장합니다. 다른 기기·이전 시안과 자동으로 공유되지 않습니다. 반복 작업은 새 항목으로 추가하고 명시적으로 선택한 항목만 수정합니다. 전체 JSON 백업에 글과 이미지가 포함됩니다. 복원은 현재 워크스페이스 교체 전 확인합니다.
+## 기록
 
-보고서는 내용을 검토한 다음 브라우저 인쇄창에서 PDF로 저장합니다. 요약 텍스트에는 이미지를 넣지 않습니다. 사용자 기록은 사실의 자동 검증이나 기관 승인을 보장하지 않습니다.
-
-## 편집과 배포
-빌드·패키지 설치 없이 dist/를 정적 호스팅 대상으로 사용합니다. 편집용 소스 ZIP의 hosting.json에는 기존 project_id를 넣지 않습니다.
-
-## 근거의 한계
-설문 n=43, 인터뷰 n=12(분야별 3명). 추가 첨부 도식 Collaboration_Atlas_outlined_07.svg를 기준으로 네 관점, 활동별 협업 경로 검토안, 분야 표본 A16/B6/C14/D7과 소수 첫째 자리 역할 평균을 반영했습니다. 원 SVG와 표기값·출처 JSON을 보관합니다. 원 CSV·정밀값·검정표·인터뷰 발언 및 코딩, 최신 논문 전체는 이번 첨부에 포함되지 않았습니다. 기호와 요청문은 설명 예시이며 단계 정체 예방은 검증할 가설입니다.
+Log의 프로젝트 기록은 사용하는 브라우저의 IndexedDB에만 저장된다. 다른 기기로 옮기려면 Log의 JSON 백업을 쓴다.
